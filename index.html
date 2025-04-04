@@ -13,7 +13,6 @@
             background-color: #f4f4f9;
             color: #333;
         }
-        /* Navigation Bar */
         .navbar {
             background-color: #2c3e50;
             overflow: hidden;
@@ -41,7 +40,6 @@
             color: #ccc;
             pointer-events: none;
         }
-        /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -66,7 +64,6 @@
             margin-bottom: 30px;
             text-align: center;
         }
-        /* Day Cards */
         .day-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -79,6 +76,10 @@
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
+            display: flex; /* Use Flexbox to align content */
+            flex-direction: column; /* Stack content vertically */
+            justify-content: space-between; /* Push button to the bottom */
+            min-height: 200px; /* Ensure all cards have a minimum height for consistency */
         }
         .day-card:hover {
             transform: translateY(-5px);
@@ -89,6 +90,7 @@
         }
         .day-card p {
             margin: 10px 0;
+            flex-grow: 1; /* Allow the paragraph to take up available space */
         }
         .day-card a {
             display: inline-block;
@@ -98,6 +100,8 @@
             text-decoration: none;
             border-radius: 3px;
             transition: background-color 0.2s;
+            align-self: flex-start; /* Align button to the start (left) */
+            margin-top: 10px; /* Add some spacing above the button */
         }
         .day-card a:hover {
             background-color: #2980b9;
@@ -113,82 +117,70 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
     <div class="navbar">
         <a href="index.html" class="active">Home</a>
         <a href="Day1practice.html">Day 1</a>
         <a href="Day2practice.html">Day 2</a>
         <a href="Day3practice.html">Day 3</a>
-        <a href="#" class="placeholder">Day 4</a>
+        <a href="Day4practice.html">Day 4</a>
         <a href="#" class="placeholder">Day 5</a>
         <a href="#" class="placeholder">Day 6</a>
         <a href="#" class="placeholder">Day 7</a>
         <a href="#" class="placeholder">Day 8</a>
     </div>
 
-    <!-- Main Content -->
     <div class="container">
         <h1>My Data Analyst Learning Portfolio</h1>
 
-        <!-- Introduction -->
         <div class="intro">
             <h2>Welcome to My Learning Journey</h2>
-            <p>I’m on a mission to become a junior data analyst, and this portfolio documents my progress in mastering Google Sheets and data analysis skills. Over the past three days, I’ve learned to clean, analyze, and visualize data, building a strong foundation for a career in data analysis. Follow my journey as I tackle new challenges and expand my skill set!</p>
+            <p>I’m on a mission to become a junior data analyst, and this portfolio documents my progress in mastering Google Sheets and data analysis skills. Over the past four days, I’ve learned to clean, analyze, visualize, and now integrate data with advanced tools. Follow my journey as I tackle new challenges and expand my skill set!</p>
         </div>
 
-        <!-- Day Summaries -->
         <h2>Learning Progress</h2>
         <div class="day-grid">
-            <!-- Day 1 -->
             <div class="day-card">
                 <h3>Day 1: Basics of Google Sheets</h3>
                 <p>Learned the fundamentals of Google Sheets, including creating a dataset, sorting, filtering, and using basic functions like SUM, AVERAGE, and COUNT. I built a 50-row investment dataset and summarized it with key metrics.</p>
                 <a href="Day1practice.html">View Details</a>
             </div>
 
-            <!-- Day 2 -->
             <div class="day-card">
                 <h3>Day 2: Intermediate Google Sheets Skills</h3>
                 <p>Expanded my dataset to 100 rows, cleaned it by removing duplicates, and used intermediate functions like IF, VLOOKUP, SUMIF, and AVERAGEIF. I also applied conditional formatting and wrote an analysis of my portfolio’s performance.</p>
                 <a href="Day2practice.html">View Details</a>
             </div>
 
-            <!-- Day 3 -->
             <div class="day-card">
                 <h3>Day 3: Advanced Google Sheets Skills</h3>
                 <p>Created a pie chart to visualize high vs. low-value investments, used pivot tables to summarize data by investment type, calculated growth percentages, identified outliers, and wrote an advanced analysis. My portfolio’s growth showed significant volatility, highlighting the need for diversification.</p>
                 <a href="Day3practice.html">View Details</a>
             </div>
 
-            <!-- Day 4 Placeholder -->
-            <div class="day-card placeholder">
-                <h3>Day 4: Coming Soon</h3>
-                <p>Stay tuned for more advanced data analysis techniques!</p>
-                <a href="#">View Details</a>
+            <div class="day-card">
+                <h3>Day 4: Integrating Google Sheets with Google Data Studio</h3>
+                <p>Connected my Google Sheet to Google Data Studio, created a dashboard with a pie chart, bar chart, and table, and added interactive filters. The analysis revealed a tech-driven portfolio with high growth in stocks and crypto, but also risks in alternative investments.</p>
+                <a href="Day4practice.html">View Details</a>
             </div>
 
-            <!-- Day 5 Placeholder -->
             <div class="day-card placeholder">
                 <h3>Day 5: Coming Soon</h3>
                 <p>Stay tuned for more advanced data analysis techniques!</p>
                 <a href="#">View Details</a>
             </div>
 
-            <!-- Day 6 Placeholder -->
             <div class="day-card placeholder">
                 <h3>Day 6: Coming Soon</h3>
                 <p>Stay tuned for more advanced data analysis techniques!</p>
                 <a href="#">View Details</a>
             </div>
 
-            <!-- Day 7 Placeholder -->
             <div class="day-card placeholder">
                 <h3>Day 7: Coming Soon</h3>
                 <p>Stay tuned for more advanced data analysis techniques!</p>
                 <a href="#">View Details</a>
             </div>
 
-            <!-- Day 8 Placeholder -->
             <div class="day-card placeholder">
                 <h3>Day 8: Coming Soon</h3>
                 <p>Stay tuned for more advanced data analysis techniques!</p>
