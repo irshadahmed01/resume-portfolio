@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3: Advanced Google Sheets Skills</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+        p {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c0392b;
+        }
+        ul {
+            background-color: #fff;
+            padding: 15px 15px 15px 35px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .info-box {
+            background-color: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Day 3: Advanced Google Sheets Skills</h1>
+
+    <div class="section">
+        <h2>Sheet Information</h2>
+        <div class="info-box">
+            <p><strong>Sheet Name:</strong> Day 1 Practice</p>
+            <p><strong>Tab Name:</strong> Investments</p>
+            <p><strong>Structure:</strong> The sheet contains 100 rows of investment data (A3:G102) with headers in A2:G2: "Dollars Invested," "Investment Name," "Current Value," "HIGH/LOW," "Investment Type," "Growth %," and "Outliers." Summaries are in A103:A138, including totals, averages, counts, and analysis.</p>
+            <p><strong>Conditional Formatting:</strong> Applied to C3:C102: green for Current Values > $5,000, red for <= $5,000.</p>
+            <p><strong>Additional Sheets:</strong> A "Pivot Table" sheet contains a pivot table summarizing Current Value by Investment Type.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Dataset Information</h2>
+        <div class="info-box">
+            <p><strong>Dataset Size:</strong> 100 rows, 7 columns (A3:G102).</p>
+            <p><strong>Columns:</strong></p>
+            <ul>
+                <li><strong>Dollars Invested (A):</strong> Initial investment amount, ranging from $60 to $1,040.</li>
+                <li><strong>Investment Name (B):</strong> Name of the investment (e.g., Samsung Stock, Apple Bond).</li>
+                <li><strong>Current Value (C):</strong> Current value of the investment, ranging from $600 to $9,950.</li>
+                <li><strong>HIGH/LOW (D):</strong> Categorizes investments as "HIGH" (> $5,000) or "LOW" (<= $5,000).</li>
+                <li><strong>Investment Type (E):</strong> Categorizes investments as Stock, Bond, ETF, Fund, Crypto, or Other.</li>
+                <li><strong>Growth % (F):</strong> Percentage growth of the investment, ranging from -8.05% to 12,328.57%.</li>
+                <li><strong>Outliers (G):</strong> Marks high outliers (Growth % > 5,005.11%) as "High Outlier".</li>
+            </ul>
+            <p><strong>Key Stats:</strong> Total Invested: $53,580, Total Current Value: $519,700, High-Value Investments: 51, Low-Value Investments: 49.</p>
+            <p><strong>Sample Data (First 5 Rows):</strong></p>
+            <table>
+                <tr>
+                    <th>Dollars Invested</th>
+                    <th>Investment Name</th>
+                    <th>Current Value</th>
+                    <th>HIGH/LOW</th>
+                    <th>Investment Type</th>
+                    <th>Growth %</th>
+                    <th>Outliers</th>
+                </tr>
+                <tr>
+                    <td>$70.00</td>
+                    <td>NVIDIA Stock</td>
+                    <td>$8,700.00</td>
+                    <td>HIGH</td>
+                    <td>Stock</td>
+                    <td>12,328.57%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr>
+                    <td>$90.00</td>
+                    <td>AMD Stock</td>
+                    <td>$8,800.00</td>
+                    <td>HIGH</td>
+                    <td>Stock</td>
+                    <td>9,677.78%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr>
+                    <td>$80.00</td>
+                    <td>Ethereum</td>
+                    <td>$6,300.00</td>
+                    <td>HIGH</td>
+                    <td>Crypto</td>
+                    <td>7,775.00%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr>
+                    <td>$100.00</td>
+                    <td>Litecoin</td>
+                    <td>$6,400.00</td>
+                    <td>HIGH</td>
+                    <td>Crypto</td>
+                    <td>6,300.00%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr>
+                    <td>$190.00</td>
+                    <td>401K (Vanguard)</td>
+                    <td>$7,000.00</td>
+                    <td>HIGH</td>
+                    <td>Other</td>
+                    <td>3,584.21%</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Formulas Used</h2>
+        <div class="info-box">
+            <p><strong>IF Formula:</strong> <code>=IF(C3>5000, "High", "Low")</code> in D3:D102 to categorize investments as "HIGH" or "LOW" based on Current Value.</p>
+            <p><strong>COUNTIF:</strong> <code>=COUNTIF(D3:D102, "HIGH")</code> in A106 to count high-value investments (51).</p>
+            <p><strong>SUM:</strong> <code>=SUM(A3:A102)</code> in A103 for Total Invested ($53,580), <code>=SUM(C3:C102)</code> in C103 for Total Current Value ($519,700).</p>
+            <p><strong>AVERAGE:</strong> <code>=AVERAGE(A3:A102)</code> in A104 for Average Invested ($535.80), <code>=AVERAGE(C3:C102)</code> in C104 for Average Current Value ($5,197).</p>
+            <p><strong>SUMIF:</strong> <code>=SUMIF(D3:D102, "HIGH", C3:C102)</code> in B112 for Total High-Value Current Value ($385,850), <code>=SUMIF(D3:D102, "LOW", C3:C102)</code> in B114 for Total Low-Value Current Value ($133,850).</p>
+            <p><strong>AVERAGEIF:</strong> <code>=AVERAGEIF(D3:D102, "HIGH", C3:C102)</code> in B113 for Average High-Value Current Value ($7,565.69), <code>=AVERAGEIF(D3:D102, "LOW", C3:C102)</code> in B115 for Average Low-Value Current Value ($2,731.63).</p>
+            <p><strong>Growth % Formula:</strong> <code>=((C3-A3)/A3)*100</code> in F3:F102 to calculate percentage growth (e.g., NVIDIA Stock: 12,328.57%).</p>
+            <p><strong>AVERAGE (Growth %):</strong> <code>=AVERAGE(F3:F102)</code> in B133 for Average Growth % (1,354.37%).</p>
+            <p><strong>STDEV (Growth %):</strong> <code>=STDEV(F3:F102)</code> in B134 for Standard Deviation of Growth % (1,825.37%).</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Day 3, Task 1: Create a Chart</h2>
+        <p>I created a pie chart to visualize the proportion of high vs. low-value investments based on their Current Value. I used <code>=SUMIF(D3:D102, "HIGH", C3:C102)</code> to calculate the total for HIGH investments ($385,850) and <code>=SUMIF(D3:D102, "LOW", C3:C102)</code> for LOW investments ($133,850). The chart shows that HIGH investments account for 74.2% of the total Current Value, while LOW investments make up 25.8%.</p>
+    </div>
+
+    <div class="section">
+        <h2>Day 3, Task 2: Use Pivot Tables</h2>
+        <p>I added an "Investment Type" column (E3:E102) to categorize investments as Stock, Bond, ETF, Fund, Crypto, or Other. I created a pivot table to summarize the total Current Value by Investment Type, showing Stocks at $345,450, Bonds at $45,400, ETFs at $40,300, Funds at $9,500, Crypto at $25,800, and Other at $53,250.</p>
+    </div>
+
+    <div class="section">
+        <h2>Day 3, Task 3: Calculate Growth Percentages</h2>
+        <p>I added a "Growth %" column (F3:F102) using the formula <code>=((C3-A3)/A3)*100</code> to calculate the percentage growth for each investment. Growth percentages range from -8.05% (Art Investment (Picasso)) to 12,328.57% (NVIDIA Stock), showing significant variation in investment performance.</p>
+    </div>
+
+    <div class="section">
+        <h2>Day 3, Task 4: Identify Outliers</h2>
+        <p>I calculated the average Growth % (1,354.37%) and standard deviation (1,825.37%) using <code>=AVERAGE(F3:F102)</code> and <code>=STDEV(F3:F102)</code>. High outliers (Growth % > 5,005.11%) include NVIDIA Stock (12,328.57%), AMD Stock (9,677.78%), Ethereum (7,775.00%), and Litecoin (6,300.00%). Low outliers (Growth % < 100%) include OpenAI Stock (42.86%) and Art Investment (Picasso) (-8.05%), indicating exceptional and poor performance, respectively.</p>
+    </div>
+
+    <div class="section">
+        <h2>Day 3, Task 5: Advanced Analysis</h2>
+        <p>High-value investments, primarily stocks, dominate my portfolio, contributing 74.2% ($385,850) of the total Current Value. The pivot table confirms stocks as the leading contributor ($345,450), while growth percentages display significant volatility, ranging from NVIDIA Stock's 12,328.57% to Art Investment (Picasso)'s -8.05%. This highlights the high-risk, high-reward nature of tech stocks compared to alternative investments, suggesting a need for diversification into more stable assets to mitigate risk.</p>
+    </div>
+</body>
+</html>

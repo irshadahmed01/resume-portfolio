@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: Basics of Google Sheets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+        p {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c0392b;
+        }
+        ul {
+            background-color: #fff;
+            padding: 15px 15px 15px 35px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .info-box {
+            background-color: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Day 1: Basics of Google Sheets</h1>
+
+    <div class="section">
+        <h2>Sheet Information</h2>
+        <div class="info-box">
+            <p><strong>Sheet Name:</strong> Day 1 Practice</p>
+            <p><strong>Tab Name:</strong> Investments</p>
+            <p><strong>Structure:</strong> The sheet contains 50 rows of investment data (A3:C52) with headers in A2:C2: "Dollars Invested," "Investment Name," and "Current Value." Summaries are in A53:A58, including totals, averages, and counts.</p>
+            <p><strong>Sorting and Filtering:</strong> Sorted by Current Value (highest to lowest); filtered to show investments with Current Value > $1,000.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Dataset Information</h2>
+        <div class="info-box">
+            <p><strong>Dataset Size:</strong> 50 rows, 3 columns (A3:C52).</p>
+            <p><strong>Columns:</strong></p>
+            <ul>
+                <li><strong>Dollars Invested (A):</strong> Initial investment amount, ranging from $60 to $1,040.</li>
+                <li><strong>Investment Name (B):</strong> Name of the investment (e.g., Sundry, Tech Stock).</li>
+                <li><strong>Current Value (C):</strong> Current value of the investment, ranging from $1,000 to $9,974.</li>
+            </ul>
+            <p><strong>Key Stats:</strong> Total Invested: $26,655, Total Current Value: $245,449, Average Invested: $533.10, Average Current Value: $4,908.98.</p>
+            <p><strong>Sample Data (First 5 Rows After Sorting):</strong></p>
+            <table>
+                <tr>
+                    <th>Dollars Invested</th>
+                    <th>Investment Name</th>
+                    <th>Current Value</th>
+                </tr>
+                <tr>
+                    <td>$452.00</td>
+                    <td>Sundry</td>
+                    <td>$9,974.00</td>
+                </tr>
+                <tr>
+                    <td>$735.00</td>
+                    <td>chrunchyroll</td>
+                    <td>$9,923.00</td>
+                </tr>
+                <tr>
+                    <td>$567.00</td>
+                    <td>Deepseek</td>
+                    <td>$9,529.00</td>
+                </tr>
+                <tr>
+                    <td>$930.00</td>
+                    <td>Grok</td>
+                    <td>$9,261.00</td>
+                </tr>
+                <tr>
+                    <td>$874.00</td>
+                    <td>Tech Stock</td>
+                    <td>$8,560.00</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Formulas Used</h2>
+        <div class="info-box">
+            <p><strong>SUM:</strong> <code>=SUM(A3:A52)</code> in A53 for Total Invested ($26,655), <code>=SUM(C3:C52)</code> in C53 for Total Current Value ($245,449).</p>
+            <p><strong>AVERAGE:</strong> <code>=AVERAGE(A3:A52)</code> in A54 for Average Invested ($533.10), <code>=AVERAGE(C3:C52)</code> in C54 for Average Current Value ($4,908.98).</p>
+            <p><strong>COUNT:</strong> <code>=COUNT(A3:A52)</code> in A55 for Count of Investments (50).</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Introduction to Google Sheets</h2>
+        <p>In this, we are going to learn about Google Sheets. Google Sheets are part of Google. You can use Google Sheets to create powerful spreadsheets, even complex ones. These sheets are online in nature. You can create, edit, and collaborate whenever and wherever you want. You can choose a template or create one from the template gallery.</p>
+        <p>You can upload files too, like from Excel or Apple Numbers, etc.</p>
+        <p>Each cell can hold so much info—it could be numbers or alphabets. We can add sheets by clicking on the + to add more sheets. A bunch of those sheets in a single file is called a workbook.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 1: My First Dataset</h2>
+        <p>I typed a small dataset about investments to practice with Google Sheets. The dataset initially had 4 rows, which I later expanded to 50 rows. The first few rows are shown in the "Dataset Information" section above.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 2: Sorting and Filtering</h2>
+        <p>I sorted the dataset by "Current Value" from highest to lowest, so Sundry ($9,974) came first, followed by chrunchyroll ($9,923). I also used a filter to show only investments with a Current Value greater than $1,000, which hid Google Stock ($1,000) and showed Cd ($1,121), Mid-Cap Mutual Fund, and 401K.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 3: Using Functions</h2>
+        <p>I used the following functions to summarize my initial data (4 rows):</p>
+        <ul>
+            <li><code>=SUM(A3:A6)</code> to calculate total Dollars Invested: $850.</li>
+            <li><code>=SUM(C3:C6)</code> to calculate total Current Value: $15,184.</li>
+            <li><code>=AVERAGE(A3:A6)</code> to find the average invested: $212.50.</li>
+            <li><code>=AVERAGE(C3:C6)</code> to find the average current value: $3,796.</li>
+            <li><code>=COUNT(A3:A6)</code> to count the number of investments: 4.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Task 4: Expanding the Dataset</h2>
+        <p>I expanded the dataset to 50 rows by adding more fake investments, like "Tech Stock" ($874 invested, $8,560 value) and "Bond A" ($524 invested, $3,489 value). This gave me more data to practice with, mimicking real analyst work.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 5: Cleaning the Dataset</h2>
+        <p>I sorted the 50 rows by "Current Value" (highest to lowest) and checked for duplicates using "Data" > "Remove Duplicates." I didn’t find any duplicates in my dataset.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 6: Summarizing the Expanded Dataset</h2>
+        <p>After expanding to 50 rows, I updated my summaries:</p>
+        <ul>
+            <li>Total Dollars Invested: $26,655 (using <code>=SUM(A3:A52)</code>).</li>
+            <li>Total Current Value: $245,449 (using <code>=SUM(C3:C52)</code>).</li>
+            <li>Average Invested: $533.10 (using <code>=AVERAGE(A3:A52)</code>).</li>
+            <li>Average Current Value: $4,908.98 (using <code>=AVERAGE(C3:C52)</code>).</li>
+            <li>Count of Investments: 50 (using <code>=COUNT(A3:A52)</code>).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Task 7: My Analysis</h2>
+        <p>I analyzed 50 investment records. Total invested was $26,655.00, with a current value of $245,449.00, averaging $4,908.98 per investment. This shows significant growth, as the current value is nearly 10 times the amount invested, indicating a strong return on investment.</p>
+    </div>
+</body>
+</html>
