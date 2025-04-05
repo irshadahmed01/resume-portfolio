@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 7: Mastering Diverse Data Analysis Techniques</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f9; color: #333; }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 20px; }
+        p { background-color: #fff; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); margin: 10px 0; }
+        code { background-color: #ecf0f1; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', Courier, monospace; color: #c0392b; }
+        pre { background-color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; color: #c0392b; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #3498db; color: #fff; }
+        img { max-width: 100%; height: auto; }
+        .highlight { background-color: #e8f4f8; padding: 10px; border-left: 4px solid #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Day 7: Mastering Diverse Data Analysis Techniques</h1>
+
+    <div class="section">
+        <h2>Sheet Information</h2>
+        <p><strong>Sheet Name:</strong> Day 1 Practice<br><strong>Tab Name:</strong> Investments<br><strong>Structure:</strong> 100 rows of investment data (A2:I101) with headers in A1:I1, including Dollars Invested, Current Value, Growth %, and Investment Type.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 1: Data Visualization with Tableau</h2>
+        <p>Exported my Google Sheet as <code>investments_day7.csv</code> and connected it to Tableau Public, creating an interactive dashboard to visualize my investment portfolio. Developed a <strong>bar chart</strong> to display Total Current Value by Investment Type, confirming Stocks at $345,450 dominate, and a <strong>scatter plot</strong> to explore Growth % versus Current Value, highlighting high-growth outliers like NVIDIA Stock. Integrated both into a dashboard with filters for <em>Investment Type</em> (Bond, Crypto, ETF, Fund, Other, Stock) and <em>HIGH/LOW</em> (value > $5,000 or ≤ $5,000), enhancing data interactivity.</p>
+        <p><img src="/practice/day7/tableau_dashboard.png" alt="Tableau Dashboard" style="max-width: 100%; height: auto;"> (Figure 1: Tableau Dashboard)</p>
+        <p><strong>Key Insights</strong>: The bar chart mirrors the SQL total value analysis, while the scatter plot reveals a cluster of high-value, high-growth investments, underscoring the portfolio’s tech and crypto focus.</p>
+        <p>Tableau Public Link: <a href="https://public.tableau.com/views/Day7_Tableau_twb/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank">View Dashboard</a>. Saved as <code>Day7_Tableau.twb</code>. In cell A158: “Created Tableau visualizations (bar chart and scatter plot) and a dashboard for my investment data, saved as Day7_Tableau.twb and published on Tableau Public with link: https://public.tableau.com/views/Day7_Tableau_twb/Dashboard1...”</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 2: Machine Learning Basics with Python</h2>
+        <p>Implemented a linear regression model using Python to predict future investment values, leveraging the <code>pandas</code> and <code>scikit-learn</code> libraries. The script <code>ml_portfolio.py</code> used "Dollars Invested" and "Row Number" as features to predict "Current Value" for the next 10 investments, assuming a $1,000 investment per row.</p>
+        <pre>
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+data = pd.read_csv('C:/Users/notir/resume-portfolio/da/investments_day7.csv')
+data['Dollars Invested'] = data['Dollars Invested'].replace(r'[\$,]', '', regex=True).astype(float)
+data['Current Value'] = data['Current Value'].replace(r'[\$,]', '', regex=True).astype(float)
+
+X = data[['Dollars Invested', 'Row Number']]
+y = data['Current Value']
+
+model = LinearRegression()
+model.fit(X, y)
+
+new_investments_df = pd.DataFrame({
+    'Dollars Invested': np.full(10, 1000),
+    'Row Number': range(101, 111)
+})
+predictions = model.predict(new_investments_df)
+
+print("Predicted Current Values for next 10 investments:")
+for i, pred in enumerate(predictions, 101):
+    print(f"Investment {i}: ${pred:.2f}")
+
+plt.scatter(X['Row Number'], y, color='blue', label='Actual')
+plt.plot(new_investments_df['Row Number'], predictions, color='red', label='Predicted')
+plt.xlabel('Row Number')
+plt.ylabel('Current Value ($)')
+plt.title('Linear Regression Prediction')
+plt.legend()
+plt.show()
+
+predictions_df = pd.DataFrame({'Row Number': range(101, 111), 'Predicted Value': predictions})
+predictions_df.to_csv('C:/Users/notir/resume-portfolio/da/ml_predictions.csv', index=False)
+        </pre>
+        <p><strong>Predicted Values</strong>:
+        <pre>
+Investment 101: $3142.13
+Investment 102: $3029.36
+Investment 103: $2916.58
+Investment 104: $2803.81
+Investment 105: $2691.04
+Investment 106: $2578.26
+Investment 107: $2465.49
+Investment 108: $2352.72
+Investment 109: $2239.94
+Investment 110: $2127.17
+        </pre>
+        <p><img src="figure1.png" alt="Linear Regression Prediction" style="max-width: 100%; height: auto;"> (Figure 2: Linear Regression Prediction)</p>
+        <p><strong>Analysis</strong>: The model provides a downward trend ($3,142.13 to $2,127.17), indicating a potential limitation in linear assumptions given the portfolio’s volatility. Future improvements could include non-linear models. Saved predictions to <code>ml_predictions.csv</code>. In cell A159: “Built a linear regression model in Python to predict future investment values, with predictions ranging from $3,142.13 to $2,127.17, saved to ml_predictions.csv.”</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 3: SQL for Data Analysis</h2>
+        <p>Converted <code>investments_day7.csv</code> into a SQLite database (<code>investments.db</code>) using Python, enabling advanced querying with SQL. Utilized the <code>sqlite3</code> module to create a structured database and executed multiple queries to extract actionable insights.</p>
+        <pre>
+import pandas as pd
+import sqlite3
+
+data = pd.read_csv('C:/Users/notir/resume-portfolio/da/investments_day7.csv')
+data['Dollars Invested'] = data['Dollars Invested'].replace(r'[\$,]', '', regex=True).astype(float)
+data['Current Value'] = data['Current Value'].replace(r'[\$,]', '', regex=True).astype(float)
+
+conn = sqlite3.connect('C:/Users/notir/resume-portfolio/da/investments.db')
+data.to_sql('investments', conn, if_exists='replace', index=False)
+conn.close()
+        </pre>
+        <p><strong>Queries and Results</strong>:
+        <pre>
+-- Total Current Value by Investment Type
+SELECT "Investment Type", SUM("Current Value") as Total_Value
+FROM investments
+GROUP BY "Investment Type"
+ORDER BY Total_Value DESC;
+
+Result:
+Stock   345450.0
+Other   53250.0
+Bond    45400.0
+ETF     40300.0
+Crypto  25800.0
+Fund    9500.0
+
+-- High-Growth Investments (corrected)
+SELECT "Investment Name", CAST(REPLACE("Growth %", '%', '') AS REAL) as Growth_Percent
+FROM investments
+WHERE CAST(REPLACE("Growth %", '%', '') AS REAL) > 5000
+ORDER BY Growth_Percent DESC;
+
+Result:
+NVIDIA Stock    12328.57
+AMD Stock       9677.78
+Ethereum        7775.0
+Litecoin        6300.0
+
+-- Average Growth by Type
+SELECT "Investment Type", AVG(CAST(REPLACE("Growth %", '%', '') AS REAL)) as Avg_Growth
+FROM investments
+GROUP BY "Investment Type";
+
+Result:
+Bond    437.18
+Crypto  4618.38
+ETF     1435.14
+Fund    865.65
+Other   1290.40
+Stock   1411.05
+
+-- Investments Above $5,000
+SELECT "Investment Name", "Current Value"
+FROM investments
+WHERE "Current Value" > 5000
+ORDER BY "Current Value" DESC;
+
+Result: (Top 5)
+Samsung Stock  9950.0
+Apple Stock    9800.0
+Sony Stock     9800.0
+Dell Stock     9600.0
+Microsoft Stock 9600.0
+        </pre>
+        <p><strong>Key Insights</strong>: Stocks lead with $345,450, Crypto averages an impressive 4,618.38% growth, and high-growth investments like NVIDIA Stock (12,328.57%) highlight portfolio potential. In cell A160: “Converted CSV to SQLite database and ran SQL queries to summarize data by investment type and identify high-growth investments.”</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 4: Comprehensive Analysis and Reflection</h2>
+        <p><strong>Overview</strong>: Day 7 represents a pivotal advancement in my data analysis skills, integrating Tableau, Python, and SQL to provide a multi-faceted view of my investment portfolio. This day’s work builds on previous efforts, adding predictive modeling and database querying to my toolkit.</p>
+        <div class="highlight">
+            <p><strong>Tableau Insights</strong>: The dashboard’s bar chart validated the $345,450 Stock dominance, while the scatter plot uncovered high-growth, high-value trends, reinforcing the importance of diversification beyond tech stocks.</p>
+            <p><strong>Python Insights</strong>: The linear regression model’s predictions ($3,142.13 to $2,127.17) offer a starting point for forecasting, though the downward trend suggests the need for advanced models to capture non-linear growth patterns seen in NVIDIA (12,328.57%) and Ethereum (7,775.00%).</p>
+            <p><strong>SQL Insights</strong>: Queries revealed Stocks’ financial weight ($345,450), Crypto’s growth leadership (4,618.38% average), and 53 high-value investments (> $5,000), providing a robust data foundation for strategic decisions.</p>
+        </div>
+        <p><strong>Significance</strong>: This day’s achievements mark a transition from foundational skills to advanced analytics, equipping me with tools to handle complex datasets, visualize trends interactively, and predict future outcomes. The integration of these techniques showcases a professional-level approach, setting a high bar for Day 8, where I aim to explore machine learning refinements or new visualization platforms.</p>
+        <p>In cells: A158: “Created Tableau visualizations...”, A159: “Built a linear regression model...”, A160: “Converted CSV to SQLite database...”</p>
+    </div>
+</body>
+</html>
