@@ -29,7 +29,7 @@
     <div class="section">
         <h2>Task 1: Data Visualization with Tableau</h2>
         <p>Exported my Google Sheet as <code>investments_day7.csv</code> and connected it to Tableau Public, creating an interactive dashboard to visualize my investment portfolio. Developed a <strong>bar chart</strong> to display Total Current Value by Investment Type, confirming Stocks at $345,450 dominate, and a <strong>scatter plot</strong> to explore Growth % versus Current Value, highlighting high-growth outliers like NVIDIA Stock. Integrated both into a dashboard with filters for <em>Investment Type</em> (Bond, Crypto, ETF, Fund, Other, Stock) and <em>HIGH/LOW</em> (value > $5,000 or ≤ $5,000), enhancing data interactivity.</p>
-        <p><img src="/practice01/day7/tableau_dashboard.png" alt="Tableau Dashboard" style="max-width: 100%; height: auto;"> (Figure 1: Tableau Dashboard)</p>
+        <p><img src="tableau_dashboard.png" alt="Tableau Dashboard" style="max-width: 100%; height: auto;"> (Figure 1: Tableau Dashboard)</p>
         <p><strong>Key Insights</strong>: The bar chart mirrors the SQL total value analysis, while the scatter plot reveals a cluster of high-value, high-growth investments, underscoring the portfolio’s tech and crypto focus.</p>
         <p>Tableau Public Link: <a href="https://public.tableau.com/views/Day7_Tableau_twb/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank">View Dashboard</a>. Saved as <code>Day7_Tableau.twb</code>. In cell A158: “Created Tableau visualizations (bar chart and scatter plot) and a dashboard for my investment data, saved as Day7_Tableau.twb and published on Tableau Public with link: https://public.tableau.com/views/Day7_Tableau_twb/Dashboard1...”</p>
     </div>
@@ -43,7 +43,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
-data = pd.read_csv('C:/Users/notir/resume-portfolio/da/investments_day7.csv')
+data = pd.read_csv('C:/investments_day7.csv')
 data['Dollars Invested'] = data['Dollars Invested'].replace(r'[\$,]', '', regex=True).astype(float)
 data['Current Value'] = data['Current Value'].replace(r'[\$,]', '', regex=True).astype(float)
 
@@ -72,7 +72,7 @@ plt.legend()
 plt.show()
 
 predictions_df = pd.DataFrame({'Row Number': range(101, 111), 'Predicted Value': predictions})
-predictions_df.to_csv('C:/Users/notir/resume-portfolio/da/ml_predictions.csv', index=False)
+predictions_df.to_csv('C:/ml_predictions.csv', index=False)
         </pre>
         <p><strong>Predicted Values</strong>:
         <pre>
