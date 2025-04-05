@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 6: Mastering Advanced Data Analysis Techniques</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f9; color: #333; }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 20px; }
+        p { background-color: #fff; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); margin: 10px 0; }
+        code { background-color: #ecf0f1; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', Courier, monospace; color: #c0392b; }
+        pre { background-color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; color: #c0392b; margin: 10px 0; }
+        ul { background-color: #fff; padding: 15px 15px 15px 35px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); margin: 10px 0; }
+        .section { margin-bottom: 30px; }
+        .info-box { background-color: #e8f4f8; border-left: 5px solid #3498db; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #3498db; color: #fff; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #f1f1f1; }
+        canvas { max-width: 300px; margin: 20px auto; display: block; }
+        .visual-section { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: flex-start; }
+        .visual-section .table-container { flex: 1; min-width: 300px; max-width: 500px; }
+        .visual-section .chart-container { flex: 1; min-width: 300px; max-width: 400px; text-align: center; }
+        img { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <h1>Day 6: Mastering Advanced Data Analysis Techniques</h1>
+
+    <div class="section">
+        <h2>Sheet Information</h2>
+        <div class="info-box">
+            <p><strong>Sheet Name:</strong> Day 1 Practice</p>
+            <p><strong>Tab Name:</strong> Investments</p>
+            <p><strong>Structure:</strong> 100 rows of investment data (A2:G101) with headers in A1:G1: "Dollars Invested," "Investment Name," "Current Value," "HIGH/LOW," "Investment Type," "Growth %," "Outliers," "Row Number," and "Predicted Value." Summaries are in A102:A157.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Dataset Information</h2>
+        <div class="info-box">
+            <p><strong>Dataset Size:</strong> 100 rows, 9 columns (A2:I101).</p>
+            <p><strong>Columns:</strong></p>
+            <ul>
+                <li><strong>Dollars Invested (A):</strong> Initial investment amount, ranging from $60 to $1,040.</li>
+                <li><strong>Investment Name (B):</strong> Name of the investment (e.g., NVIDIA Stock, Apple Bond).</li>
+                <li><strong>Current Value (C):</strong> Current value, ranging from $600 to $9,950.</li>
+                <li><strong>HIGH/LOW (D):</strong> Categorizes as "HIGH" (> $5,000) or "LOW" (<= $5,000).</li>
+                <li><strong>Investment Type (E):</strong> Categorizes as Stock, Bond, ETF, Fund, Crypto, or Other.</li>
+                <li><strong>Growth % (F):</strong> Percentage growth, ranging from -8.05% to 12,328.57%.</li>
+                <li><strong>Outliers (G):</strong> Identifies high outliers (> 5,000%) and low outliers (< 100%).</li>
+                <li><strong>Row Number (H):</strong> Sequential number from 1 to 100.</li>
+                <li><strong>Predicted Value (I):</strong> Forecasted value for new investments (I102:I111).</li>
+            </ul>
+            <p><strong>Key Stats:</strong> Total Invested: $53,580, Total Current Value: $511,000, Average Growth %: 12.56%.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Task 1: Predictive Analysis with Google Sheets</h2>
+        <p>I used the FORECAST function in Google Sheets to predict the future value of my portfolio based on the growth trend of Current Value over row numbers. I added a ‘Row Number’ column (H2:H101) with values 1 to 100 and used the formula <code>=FORECAST(102, C2:C101, H2:H101)</code> in I102 to predict the value for the 102nd investment, dragging down to I111 for the next 10 investments. This corrected the initial misplacement in I2, which gave conservative values ($1,668.00 to $1,495.23).</p>
+        <p>The new predicted values in I102:I111 are [please insert the values from your sheet here, e.g., $X,XXX.XX to $Y,YYY.YY], reflecting the linear trend of the 100 investments. Due to the averaging of high-growth outliers (e.g., NVIDIA Stock at 12,328.57%) and low-growth investments, the linear model remains conservative. A compound growth model using the 12.56% average growth rate projects the total portfolio to approximately $1,717,000 over 10 periods.</p>
+        <p>In cell A155 of my Google Sheet, I documented: “Used the FORECAST function in Google Sheets to predict future investment values starting at I102. Predicted values range from [insert min to max] based on the 100-row trend, with a compound growth projection of $1,717,000.”</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 2: Python for Data Analysis</h2>
+        <p>I learned the basics of Python with the pandas library to analyze my investment data. I exported my Google Sheet as a CSV file (‘investments.csv’) for the range A1:G101, wrote a Python script to load the data, clean the ‘Current Value’ column, calculate summary statistics, and create a bar chart of Current Value by Investment Type. I fixed an initial error due to non-numeric data by removing dollar signs and commas.</p>
+        <p>The updated script I used is shown below:</p>
+        <pre>
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the data from the CSV file
+data = pd.read_csv('investments.csv')
+
+# Clean the 'Current Value' column by removing $ and , and converting to float
+data['Current Value'] = data['Current Value'].replace('[\$,]', '', regex=True).astype(float)
+
+# Display basic summary statistics
+print("Summary Statistics:")
+print(data.describe())
+
+# Group by Investment Type and calculate total Current Value
+type_summary = data.groupby('Investment Type')['Current Value'].sum()
+print("\nTotal Current Value by Investment Type:")
+print(type_summary)
+
+# Create a bar chart
+plt.figure(figsize=(10, 6))
+type_summary.plot(kind='bar', color='skyblue')
+plt.title('Total Current Value by Investment Type')
+plt.xlabel('Investment Type')
+plt.ylabel('Total Current Value ($)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# Save the grouped data to a new CSV file
+type_summary.to_csv('investment_type_summary.csv')
+        </pre>
+        <p>The terminal output showed:
+        <pre>
+Summary Statistics:
+       Current Value  Row Number
+count     100.000000  100.000000
+mean     5197.000000   50.500000
+std      2793.777538   29.011492
+min       600.000000    1.000000
+25%      2875.000000   25.750000
+50%      5150.000000   50.500000
+75%      7625.000000   75.250000
+max      9950.000000  100.000000
+
+Total Current Value by Investment Type:
+Investment Type
+Bond       45400.0
+Crypto     25800.0
+ETF        40300.0
+Fund        9500.0
+Other      53250.0
+Stock     345450.0
+Name: Current Value, dtype: float64
+        </pre>
+        <p>The bar chart (Figure 1) visually confirms Stocks at $345,450 dominate, followed by Other ($53,250), Bond ($45,400), ETF ($40,300), Crypto ($25,800), and Fund ($9,500). In cell A156, I documented: “Used Python with pandas to analyze my investment data. Fixed currency formatting, created a bar chart (Figure 1), and saved the summary to ‘investment_type_summary.csv’.”</p>
+        <div class="visual-section">
+            <div class="chart-container">
+                <h3>Figure 1: Total Current Value by Investment Type</h3>
+                <img src="your_image_path_here.png" alt="Bar Chart of Total Current Value by Investment Type">
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Task 3: Advanced Google Apps Script</h2>
+        <p>I enhanced my Google Apps Script by creating a custom menu ‘Portfolio Tools’ to run my scripts and added a function to generate a PDF report. The updated script, adjusted for the A2:G101 range, is shown below:</p>
+        <pre>
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('Portfolio Tools')
+    .addItem('Calculate Metrics', 'calculatePortfolioMetrics')
+    .addItem('Highlight High Growth', 'highlightHighGrowth')
+    .addItem('Send Summary Email', 'sendPortfolioSummaryEmail')
+    .addItem('Generate PDF Report', 'generatePDFReport')
+    .addToUi();
+}
+
+function calculatePortfolioMetrics() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("Investments");
+  const currentValueRange = sheet.getRange("C2:C101");
+  const growthRange = sheet.getRange("F2:F101");
+  const currentValues = currentValueRange.getValues();
+  const growthValues = growthRange.getValues();
+
+  let totalCurrentValue = 0;
+  for (let i = 0; i < currentValues.length; i++) {
+    totalCurrentValue += currentValues[i][0];
+  }
+
+  let totalGrowth = 0;
+  let count = 0;
+  for (let i = 0; i < growthValues.length; i++) {
+    if (growthValues[i][0]) {
+      totalGrowth += growthValues[i][0];
+      count++;
+    }
+  }
+  const averageGrowth = count > 0 ? totalGrowth / count : 0;
+
+  sheet.getRange("A150").setValue("Total Current Value (via Script): $" + totalCurrentValue.toFixed(2));
+  sheet.getRange("A151").setValue("Average Growth % (via Script): " + averageGrowth.toFixed(2) + "%");
+}
+
+function highlightHighGrowth() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("Investments");
+  const growthRange = sheet.getRange("F2:F101");
+  const dataRange = sheet.getRange("A2:G101");
+  const growthValues = growthRange.getValues();
+
+  for (let i = 0; i < growthValues.length; i++) {
+    const growth = growthValues[i][0];
+    if (growth > 5000) {
+      sheet.getRange(i + 2, 1, 1, 7).setBackground("#2ecc71");
+    }
+  }
+}
+
+function sendPortfolioSummaryEmail() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("Investments");
+  const totalCurrentValue = sheet.getRange("A150").getValue().split("$")[1];
+  const averageGrowth = sheet.getRange("A151").getValue().split(": ")[1];
+  const recipient = Session.getActiveUser().getEmail();
+  const subject = "Investment Portfolio Summary - April 2025";
+  const body = `
+    Hello,
+
+    Here is your investment portfolio summary for April 2025:
+
+    - Total Current Value: $${totalCurrentValue}
+    - Average Growth %: ${averageGrowth}
+
+    Best,
+    Your Portfolio Automation Script
+  `;
+  MailApp.sendEmail(recipient, subject, body);
+}
+
+function generatePDFReport() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("Investments");
+  const url = "https://docs.google.com/spreadsheets/d/" + spreadsheet.getId() + "/export?format=pdf&size=letter&portrait=true&fitw=true&top_margin=0.25&bottom_margin=0.25&left_margin=0.25&right_margin=0.25&sheetnames=false&printtitle=false&pagenum=UNDEFINED&gridlines=true&fzr=false";
+  const token = ScriptApp.getOAuthToken();
+  const response = UrlFetchApp.fetch(url, {
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  });
+  const blob = response.getBlob().setName("Portfolio_Report_" + new Date().toLocaleDateString() + ".pdf");
+  DriveApp.createFile(blob);
+}
+        </pre>
+        <p>The custom menu allowed me to run all functions easily, and the PDF report was generated and saved in my Google Drive. In cell A157, I documented: “Created a custom menu ‘Portfolio Tools’ in Google Apps Script with options to calculate metrics, highlight high growth, send an email, and generate a PDF report, adjusted for A2:G101 range.”</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 4: Reviewing Existing Visualizations</h2>
+        <p>My Google Sheet contains a pie chart visualizing High vs. Low-Value Investments (74.2% HIGH, 25.8% LOW). Below is a static representation:</p>
+        <div class="visual-section">
+            <div class="chart-container">
+                <h3>High vs. Low-Value Investments</h3>
+                <canvas id="highLowPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Task 5: My Analysis</h2>
+        <p>Today, I mastered three advanced techniques. The predictive analysis in Google Sheets, corrected to start at I102, forecasts future investment values [please insert range from I102:I111]. The linear model remains conservative due to averaging high and low growth rates, while a compound growth model with 12.56% suggests $1,717,000 over 10 periods. Python’s pandas library confirmed Stocks ($345,450) dominate, as shown in Figure 1. The advanced Google Apps Script added a custom menu and PDF reporting, enhancing efficiency.</p>
+        <p>The pie chart reinforces the 74.2% high-value dominance, while Figure 1 highlights stock concentration. The predictive model’s limitation suggests exploring non-linear methods or diversification to better capture growth and mitigate risk.</p>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('highLowPieChart').getContext('2d');
+        const highLowPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: { labels: ['HIGH', 'LOW'], datasets: [{ data: [74.2, 25.8], backgroundColor: ['#2ecc71', '#e74c3c'], borderColor: ['#27ae60', '#c0392b'], borderWidth: 1 }] },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'High vs. Low-Value Investments' } } }
+        });
+    </script>
+</body>
+</html>

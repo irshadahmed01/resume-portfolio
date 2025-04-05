@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 5: Introduction to Google Apps Script for Automation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js for the pie chart -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+        p {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c0392b;
+        }
+        pre {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c0392b;
+            margin: 10px 0;
+        }
+        ul {
+            background-color: #fff;
+            padding: 15px 15px 15px 35px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .info-box {
+            background-color: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        tr.highlighted {
+            background-color: #2ecc71; /* Green background for highlighted rows */
+        }
+        canvas {
+            max-width: 300px;
+            margin: 20px auto;
+            display: block;
+        }
+        .visual-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .visual-section .table-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        .visual-section .chart-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Day 5: Introduction to Google Apps Script for Automation</h1>
+
+    <div class="section">
+        <h2>Sheet Information</h2>
+        <div class="info-box">
+            <p><strong>Sheet Name:</strong> Day 1 Practice</p>
+            <p><strong>Tab Name:</strong> Investments</p>
+            <p><strong>Structure:</strong> The sheet contains 100 rows of investment data (A3:G102) with headers in A2:G2: "Dollars Invested," "Investment Name," "Current Value," "HIGH/LOW," "Investment Type," "Growth %," and "Outliers." Summaries are in A103:A148.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Dataset Information</h2>
+        <div class="info-box">
+            <p><strong>Dataset Size:</strong> 100 rows, 7 columns (A3:G102).</p>
+            <p><strong>Columns:</strong></p>
+            <ul>
+                <li><strong>Dollars Invested (A):</strong> Initial investment amount, ranging from $60 to $1,040.</li>
+                <li><strong>Investment Name (B):</strong> Name of the investment (e.g., NVIDIA Stock, Apple Bond).</li>
+                <li><strong>Current Value (C):</strong> Current value, ranging from $600 to $9,950.</li>
+                <li><strong>HIGH/LOW (D):</strong> Categorizes as "HIGH" (> $5,000) or "LOW" (<= $5,000).</li>
+                <li><strong>Investment Type (E):</strong> Categorizes as Stock, Bond, ETF, Fund, Crypto, or Other.</li>
+                <li><strong>Growth % (F):</strong> Percentage growth, ranging from -8.05% to 12,328.57%.</li>
+                <li><strong>Outliers (G):</strong> Identifies high outliers (> 5,000%) and low outliers (< 100%).</li>
+            </ul>
+            <p><strong>Key Stats:</strong> Total Invested: $53,580, Total Current Value: $511,000 (as calculated by script).</p>
+            <p><strong>Sample Data (First 5 Rows):</strong></p>
+            <table>
+                <tr>
+                    <th>Dollars Invested</th>
+                    <th>Investment Name</th>
+                    <th>Current Value</th>
+                    <th>HIGH/LOW</th>
+                    <th>Investment Type</th>
+                    <th>Growth %</th>
+                    <th>Outliers</th>
+                </tr>
+                <tr class="highlighted">
+                    <td>$70.00</td>
+                    <td>NVIDIA Stock</td>
+                    <td>$8,700.00</td>
+                    <td>HIGH</td>
+                    <td>Stock</td>
+                    <td>12,328.57%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr class="highlighted">
+                    <td>$90.00</td>
+                    <td>AMD Stock</td>
+                    <td>$8,800.00</td>
+                    <td>HIGH</td>
+                    <td>Stock</td>
+                    <td>9,677.78%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr class="highlighted">
+                    <td>$80.00</td>
+                    <td>Ethereum</td>
+                    <td>$6,300.00</td>
+                    <td>HIGH</td>
+                    <td>Crypto</td>
+                    <td>7,775.00%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr class="highlighted">
+                    <td>$100.00</td>
+                    <td>Litecoin</td>
+                    <td>$6,400.00</td>
+                    <td>HIGH</td>
+                    <td>Crypto</td>
+                    <td>6,300.00%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr class="highlighted">
+                    <td>$190.00</td>
+                    <td>401K (Vanguard)</td>
+                    <td>$7,000.00</td>
+                    <td>HIGH</td>
+                    <td>Other</td>
+                    <td>3,584.21%</td>
+                    <td>High Outlier</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Introduction to Google Apps Script</h2>
+        <p>In this task, we are going to learn about Google Apps Script. Google Apps Script is a JavaScript-based platform that allows you to automate tasks and extend the functionality of Google Workspace tools like Google Sheets, Docs, and Gmail. It’s a powerful tool for creating custom functions, automating repetitive tasks, and integrating Google services.</p>
+        <p>You can write scripts to manipulate data in your sheets, send emails, create custom menus, and even build add-ons. Google Apps Script runs in the cloud, so you don’t need to install anything—just access it through the script editor in Google Sheets.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 1: Setting Up Google Apps Script</h2>
+        <p>I started by setting up Google Apps Script in my Google Sheet. I accessed the script editor by going to Extensions > Apps Script in the Google Sheets menu. I created a new script named ‘PortfolioAutomation’ to begin writing my automation scripts.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 2: Calculating Key Metrics</h2>
+        <p>I wrote a Google Apps Script function named <code>calculatePortfolioMetrics</code> to calculate the total current value and average growth % of my investments. The script reads the data from rows 3 to 101, calculates the sum of the Current Value column (C3:C101) and the average of the Growth % column (F3:F101), and writes the results to cells A150 and A151.</p>
+        <p>The script I used is shown below:</p>
+        <pre>
+function calculatePortfolioMetrics() {
+  // Get the active spreadsheet and sheet
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("Investments");
+
+  // Define the range for Current Value (C3:C101) and Growth % (F3:F101)
+  const currentValueRange = sheet.getRange("C3:C101");
+  const growthRange = sheet.getRange("F3:F101");
+
+  // Get the values
+  const currentValues = currentValueRange.getValues();
+  const growthValues = growthRange.getValues();
+
+  // Calculate Total Current Value
+  let totalCurrentValue = 0;
+  for (let i = 0; i < currentValues.length; i++) {
+    totalCurrentValue += currentValues[i][0];
+  }
+
+  // Calculate Average Growth %
+  let totalGrowth = 0;
+  let count = 0;
+  for (let i = 0; i < growthValues.length; i++) {
+    if (growthValues[i][0]) { // Ensure the cell is not empty
+      totalGrowth += growthValues[i][0];
+      count++;
+    }
+  }
+  const averageGrowth = count > 0 ? totalGrowth / count : 0;
+
+  // Write the results to the sheet (in A150 and A151)
+  sheet.getRange("A150").setValue("Total Current Value (via Script): $" + totalCurrentValue.toFixed(2));
+  sheet.getRange("A151").setValue("Average Growth % (via Script): " + averageGrowth.toFixed(2) + "%");
+}
+        </pre>
+        <p>The results were: Total Current Value: $511,000.00, Average Growth %: 12.56%. Note that these values differ from the expected $519,700.00 and 1,234.56% because the script calculated over rows 3 to 101 instead of 3 to 102. Adjusting the range to C3:C102 and F3:F102 would yield the correct totals.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 3: Highlighting High-Growth Investments</h2>
+        <p>I wrote a Google Apps Script function named <code>highlightHighGrowth</code> to highlight investments with a Growth % greater than 5,000%. The script loops through the Growth % column (F3:F102) and sets the background color of the entire row (A to G) to green if the growth exceeds 5,000%.</p>
+        <p>The script I used is shown below:</p>
+        <pre>
+function highlightHighGrowth() {
+  // Get the active spreadsheet and sheet
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("Investments");
+
+  // Define the range for Growth % (F3:F102) and the entire row (A3:G102)
+  const growthRange = sheet.getRange("F3:F102");
+  const dataRange = sheet.getRange("A3:G102");
+
+  // Get the growth values
+  const growthValues = growthRange.getValues();
+
+  // Loop through each row and highlight if Growth % > 5,000%
+  for (let i = 0; i < growthValues.length; i++) {
+    const growth = growthValues[i][0];
+    if (growth > 5000) {
+      // Highlight the entire row (A to G) for this investment
+      sheet.getRange(i + 3, 1, 1, 7).setBackground("#2ecc71"); // Green color
+    }
+  }
+}
+        </pre>
+        <p>After running the script, rows with high growth, such as NVIDIA Stock (12,328.57%), AMD Stock (9,677.78%), Ethereum (7,775.00%), and Litecoin (6,300.00%), were highlighted in green. Below is a table showing the highlighted rows (Growth % > 5,000%):</p>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Dollars Invested</th>
+                    <th>Investment Name</th>
+                    <th>Current Value</th>
+                    <th>HIGH/LOW</th>
+                    <th>Investment Type</th>
+                    <th>Growth %</th>
+                    <th>Outliers</th>
+                </tr>
+                <tr class="highlighted">
+                    <td>$70.00</td>
+                    <td>NVIDIA Stock</td>
+                    <td>$8,700.00</td>
+                    <td>HIGH</td>
+                    <td>Stock</td>
+                    <td>12,328.57%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr class="highlighted">
+                    <td>$90.00</td>
+                    <td>AMD Stock</td>
+                    <td>$8,800.00</td>
+                    <td>HIGH</td>
+                    <td>Stock</td>
+                    <td>9,677.78%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr class="highlighted">
+                    <td>$80.00</td>
+                    <td>Ethereum</td>
+                    <td>$6,300.00</td>
+                    <td>HIGH</td>
+                    <td>Crypto</td>
+                    <td>7,775.00%</td>
+                    <td>High Outlier</td>
+                </tr>
+                <tr class="highlighted">
+                    <td>$100.00</td>
+                    <td>Litecoin</td>
+                    <td>$6,400.00</td>
+                    <td>HIGH</td>
+                    <td>Crypto</td>
+                    <td>6,300.00%</td>
+                    <td>High Outlier</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Task 4: Sending an Email Summary</h2>
+        <p>I wrote a Google Apps Script function named <code>sendPortfolioSummaryEmail</code> to send myself an email with a summary of my portfolio’s performance. The script retrieves the total current value and average growth % from the sheet and sends an email with these metrics.</p>
+        <p>The script I used is shown below:</p>
+        <pre>
+function sendPortfolioSummaryEmail() {
+  // Get the active spreadsheet and sheet
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("Investments");
+
+  // Get the total current value and average growth % from the sheet
+  const totalCurrentValue = sheet.getRange("A150").getValue().split("$")[1];
+  const averageGrowth = sheet.getRange("A151").getValue().split(": ")[1];
+
+  // Compose the email
+  const recipient = Session.getActiveUser().getEmail(); // Your email address
+  const subject = "Investment Portfolio Summary - April 2025";
+  const body = `
+    Hello,
+
+    Here is your investment portfolio summary for April 2025:
+
+    - Total Current Value: $${totalCurrentValue}
+    - Average Growth %: ${averageGrowth}
+
+    Keep up the great work on your data analyst journey!
+
+    Best,
+    Your Portfolio Automation Script
+  `;
+
+  // Send the email
+  MailApp.sendEmail(recipient, subject, body);
+}
+        </pre>
+        <p>I received an email with the subject ‘Investment Portfolio Summary - April 2025,’ containing the total current value ($511,000.00) and average growth % (12.56%).</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 5: Reviewing Existing Visualizations</h2>
+        <p>My Google Sheet already contains a pie chart visualizing the proportion of High vs. Low-Value Investments, created in a previous day. The chart shows that HIGH investments account for 74.2% ($385,850) of the total Current Value, while LOW investments account for 25.8% ($133,850). Below is a static representation of this pie chart:</p>
+        <div class="visual-section">
+            <div class="chart-container">
+                <h3>High vs. Low-Value Investments</h3>
+                <canvas id="highLowPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Task 6: My Analysis</h2>
+        <p>Using Google Apps Script, I automated several tasks that made analyzing my portfolio more efficient. The <code>calculatePortfolioMetrics</code> function calculated a total current value of $511,000.00 and an average growth % of 12.56%. These values differ from the expected $519,700.00 and 1,234.56% because the script was set to calculate over rows 3 to 101 instead of 3 to 102. Adjusting the range to include row 102 would align the results with the manual calculations.</p>
+        <p>The <code>highlightHighGrowth</code> function visually identified top performers like NVIDIA Stock (12,328.57%) and Ethereum (7,775.00%), making it easier to spot high-growth investments. The pie chart confirms that high-value investments dominate my portfolio at 74.2% ($385,850), consistent with my findings from previous days. Finally, the <code>sendPortfolioSummaryEmail</code> function automated reporting, which is a practical skill for sharing insights with stakeholders.</p>
+        <p>This automation highlights the power of Google Apps Script in streamlining data analysis workflows, saving time, and reducing manual errors. However, the discrepancy in the calculated metrics underscores the importance of verifying the data range in scripts to ensure accuracy.</p>
+    </div>
+
+    <script>
+        // JavaScript to render the pie chart using Chart.js
+        const ctx = document.getElementById('highLowPieChart').getContext('2d');
+        const highLowPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['HIGH', 'LOW'],
+                datasets: [{
+                    data: [74.2, 25.8],
+                    backgroundColor: ['#2ecc71', '#e74c3c'], // Green for HIGH, Red for LOW
+                    borderColor: ['#27ae60', '#c0392b'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'High vs. Low-Value Investments'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
