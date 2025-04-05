@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+r<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,7 +43,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
-data = pd.read_csv('C:/Users/notir/resume-portfolio/da/investments_day7.csv')
+data = pd.read_csv('investments_day7.csv')
 data['Dollars Invested'] = data['Dollars Invested'].replace(r'[\$,]', '', regex=True).astype(float)
 data['Current Value'] = data['Current Value'].replace(r'[\$,]', '', regex=True).astype(float)
 
