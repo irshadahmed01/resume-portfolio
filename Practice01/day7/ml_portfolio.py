@@ -41,4 +41,4 @@ plt.show()
 
 # Save predictions to CSV
 predictions_df = pd.DataFrame({'Row Number': range(101, 111), 'Predicted Value': predictions})
-predictions_df.to_csv('C:/Users/notir/resume-portfolio/da/ml_predictions.csv', index=False)
+predictions_df.to_csv('C:/ml_predictions.csv', index=False)
