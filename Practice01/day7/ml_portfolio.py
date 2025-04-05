@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
 # Load and clean data
-data = pd.read_csv('C:/Users/notir/resume-portfolio/da/investments_day7.csv')
+data = pd.read_csv('C:/investments_day7.csv')
 
 # Clean the 'Dollars Invested' and 'Current Value' columns
 data['Dollars Invested'] = data['Dollars Invested'].replace(r'[\$,]', '', regex=True).astype(float)
