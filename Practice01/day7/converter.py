@@ -2,7 +2,7 @@ import pandas as pd
 import sqlite3
 
 # Load and clean CSV
-data = pd.read_csv('C:/Users/notir/resume-portfolio/da/investments_day7.csv')
+data = pd.read_csv('C:/investments_day7.csv')
 data['Dollars Invested'] = data['Dollars Invested'].replace(r'[\$,]', '', regex=True).astype(float)
 data['Current Value'] = data['Current Value'].replace(r'[\$,]', '', regex=True).astype(float)
 
