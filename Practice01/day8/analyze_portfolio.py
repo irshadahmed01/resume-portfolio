@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the data from the CSV file with the correct path
-data = pd.read_csv(r'C:Investments.csv')
+data = pd.read_csv('C:/Users/notir/resume-portfolio/Practice01/day7/investments_day7.csv')
 
 # Clean the 'Current Value' column by removing $ and , and converting to float
 data['Current Value'] = data['Current Value'].replace(r'[\$,]', '', regex=True).astype(float)
@@ -27,4 +27,4 @@ plt.tight_layout()
 plt.show()
 
 # Save the grouped data to a new CSV file
-type_summary.to_csv(r'C:\Investments.csv')
+type_summary.to_csv('C:/Users/notir/resume-portfolio/Practice01/day8/investment_type_summary.csv')
