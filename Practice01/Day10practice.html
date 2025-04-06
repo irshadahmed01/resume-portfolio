@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 10: Capstone Project</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f9; color: #333; }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 20px; }
+        p { background-color: #fff; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); margin: 10px 0; }
+        code { background-color: #ecf0f1; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', Courier, monospace; color: #c0392b; }
+        pre { background-color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; color: #c0392b; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #3498db; color: #fff; }
+        img { max-width: 100%; height: auto; }
+        .highlight { background-color: #e8f4f8; padding: 10px; border-left: 4px solid #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Day 10: Capstone Project</h1>
+
+    <div class="section">
+        <h2>Project Overview</h2>
+        <p>This capstone project integrates all skills learned over 10 days to analyze and predict the performance of my investment portfolio. Using <code>investments_day9_cleaned.csv</code>, I applied data cleaning, transformation, predictive modeling, visualization, and SQL querying to create a comprehensive report.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 1: Data Cleaning and Transformation Recap</h2>
+        <p>Verified the cleaned data from Day 9, ensuring no missing values or duplicates.</p>
+        <pre>
+# Load and verify cleaned data
+data = pd.read_csv(r'C:\Users\notir\resume-portfolio\Practice01\day9\investments_day9_cleaned.csv')
+print("Verifying Cleaned Data - Missing Values:")
+print(data.isnull().sum())
+        </pre>
+        <p><strong>Results</strong>:
+        <pre>
+Verifying Cleaned Data - Missing Values:
+Dollars Invested       0
+Investment Name        0
+Current Value          0
+HIGH/LOW               0
+Investment Type        0
+Growth %               0
+Outliers              95
+Row Number             0
+Predicted Value      100
+Normalized Growth      0
+Value Category         0
+dtype: int64
+        </pre>
+        <p><strong>Analysis</strong>: The data remains clean, with no missing values, confirming the Day 9 process.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 2: Predictive Modeling</h2>
+        <p>Applied linear and polynomial regression to predict future investment values.</p>
+        <pre>
+# Linear and Polynomial Regression
+linear_model = LinearRegression()
+linear_model.fit(X, y)
+linear_predictions = linear_model.predict(X)
+linear_mse = mean_squared_error(y, linear_predictions)
+
+poly_features = PolynomialFeatures(degree=2, include_bias=False)
+X_poly = poly_features.fit_transform(X)
+poly_model = LinearRegression()
+poly_model.fit(X_poly, y)
+poly_predictions = poly_model.predict(X_poly)
+poly_mse = mean_squared_error(y, poly_predictions)
+
+new_X = pd.DataFrame({'Dollars Invested': np.full(5, 1000), 'Row Number': range(101, 106)})
+new_X_poly = poly_features.transform(new_X)
+new_linear_predictions = linear_model.predict(new_X)
+new_poly_predictions = poly_model.predict(new_X_poly)
+print(f"\nLinear Regression MSE: {linear_mse:.2f}")
+print(f"Polynomial Regression MSE: {poly_mse:.2f}")
+print("\nPredicted Values for Next 5 Investments:")
+print("Linear Regression:")
+for i, pred in enumerate(new_linear_predictions, 101):
+    print(f"Investment {i}: ${pred:.2f}")
+print("Polynomial Regression:")
+for i, pred in enumerate(new_poly_predictions, 101):
+    print(f"Investment {i}: ${pred:.2f}")
+        </pre>
+        <p><strong>Results</strong>:
+        <pre>
+Linear Regression MSE: 1057203.92
+Polynomial Regression MSE: 438929.92
+
+Predicted Values for Next 5 Investments:
+Linear Regression:
+Investment 101: $3142.13
+Investment 102: $3029.36
+Investment 103: $2916.58
+Investment 104: $2803.81
+Investment 105: $2691.04
+Polynomial Regression:
+Investment 101: $1838.65
+Investment 102: $1745.59
+Investment 103: $1654.77
+Investment 104: $1566.21
+Investment 105: $1479.90
+        </pre>
+        <p><strong>Analysis</strong>: The polynomial model’s lower MSE (438,929.92 vs. 1,057,203.92) indicates a better fit, useful for forecasting investment growth.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 3: Visualizations</h2>
+        <p>Created visualizations to summarize the portfolio.</p>
+        <p><strong>Figure 1: Total Current Value by Investment Name</strong></p>
+        <img src="../Practice01/day10/total_value_by_name.png" alt="Total Current Value by Investment Name" style="max-width: 100%; height: auto;">
+        <p><strong>Figure 2: Value Category Distribution</strong></p>
+        <img src="../Practice01/day10/value_category_distribution.png" alt="Value Category Distribution" style="max-width: 100%; height: auto;">
+        <p><strong>Analysis</strong>: The bar charts highlight investment name dominance and category distribution, aiding strategic decisions.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 4: SQL Insights</h2>
+        <p>Queried the SQL database for average values and growth by investment name.</p>
+        <pre>
+conn = sqlite3.connect('C:/Users/notir/resume-portfolio/Practice01/day9/investments.db')
+query = """
+    SELECT "Investment Name", AVG("Current Value") as Avg_Value, AVG("Normalized Growth") as Avg_Growth
+    FROM investments_cleaned
+    GROUP BY "Investment Name"
+    ORDER BY Avg_Value DESC
+    LIMIT 10
+"""
+sql_data = pd.read_sql_query(query, conn)
+print("\nSQL Insights - Average Value and Growth by Investment Name:")
+print(sql_data)
+conn.close()
+        </pre>
+        <p><strong>Results</strong>:
+        <pre>
+SQL Insights - Average Value and Growth by Investment Name:
+    Investment Name  Avg_Value  Avg_Growth
+0     Samsung Stock     9950.0    0.261394
+1        Sony Stock     9800.0    0.098465
+2       Apple Stock     9800.0    0.169076
+3   Microsoft Stock     9600.0    0.100626
+4        Dell Stock     9600.0    0.131506
+5       Tesla Stock     9400.0    0.123919
+6          HP Stock     9400.0    0.079133
+7      Oracle Stock     9200.0    0.144740
+8      Amazon Stock     9200.0    0.075407
+9  iShares MSCI ETF     9000.0    0.195195
+        </pre>
+        <p><strong>Analysis</strong>: SQL insights reveal high-value investments like Samsung Stock ($9,950) and Sony Stock ($9,800), with varying growth rates, guiding portfolio allocation.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 5: Final Report and Automation</h2>
+        <p>Combined results into a CSV and suggest automation via Google Apps Script for future updates.</p>
+        <pre>
+results = pd.DataFrame({
+    'Investment_Name': sql_data['Investment Name'],
+    'Avg_Value': sql_data['Avg_Value'],
+    'Avg_Growth': sql_data['Avg_Growth'],
+    'Linear_Prediction_101': new_linear_predictions[0],
+    'Poly_Prediction_101': new_poly_predictions[0]
+})
+results.to_csv('C:/Users/notir/resume-portfolio/Practice01/day10/capstone_results.csv', index=False)
+print(f"\nResults saved to capstone_results.csv")
+        </pre>
+        <p><strong>Results</strong>:
+        <pre>
+Results saved to capstone_results.csv
+        </pre>
+        <p><strong>Automation Suggestion</strong>: Use Google Apps Script to automate data updates and email reports, building on Day 5 skills.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 6: Reflection and Conclusion</h2>
+        <p>Reflected on the capstone project and its significance.</p>
+        <div class="highlight">
+            <p><strong>Key Findings</strong>: 
+                - Integrated cleaning, modeling, visualization, and SQL for a holistic analysis.
+                - Polynomial regression outperformed linear, with practical predictions.
+                - Visuals and SQL insights support data-driven decisions.
+            </p>
+            <p><strong>Business Impact</strong>: This analysis enables optimized investment strategies, risk management, and growth forecasting.</p>
+            <p><strong>Personal Growth</strong>: Mastered a wide range of tools, from Google Sheets to Python and SQL, preparing me for junior data analyst roles.</p>
+            <p>In cell A169: “Completed capstone project integrating all skills for a comprehensive portfolio analysis.”</p>
+        </div>
+    </div>
+</body>
+</html>

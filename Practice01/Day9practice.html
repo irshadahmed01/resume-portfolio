@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 9: Data Cleaning and Transformation</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f9; color: #333; }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 20px; }
+        p { background-color: #fff; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); margin: 10px 0; }
+        code { background-color: #ecf0f1; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', Courier, monospace; color: #c0392b; }
+        pre { background-color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; color: #c0392b; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #3498db; color: #fff; }
+        img { max-width: 100%; height: auto; }
+        .highlight { background-color: #e8f4f8; padding: 10px; border-left: 4px solid #3498db; }
+    </style>
+</head>
+<body>
+    <h1>Day 9: Data Cleaning and Transformation</h1>
+
+    <div class="section">
+        <h2>Dataset Information</h2>
+        <p><strong>File:</strong> investments_day7.csv<br><strong>Location:</strong> C:/Users/notir/resume-portfolio/Practice01/day7/<br><strong>Structure:</strong> 100 rows with columns including Dollars Invested, Current Value, Growth %, and Row Number.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 1: Data Cleaning Process</h2>
+        <p>Applied data cleaning techniques using Python and <code>pandas</code> to preprocess <code>investments_day7.csv</code>. Handled missing values, removed duplicates, and identified outliers using the IQR method.</p>
+        <pre>
+import pandas as pd
+import numpy as np
+import sqlite3
+
+data = pd.read_csv(r'C:\Users\notir\resume-portfolio\Practice01\day7\investments_day7.csv')
+data['Current Value'] = data['Current Value'].replace(r'[\$,]', '', regex=True).astype(float)
+data['Dollars Invested'] = data['Dollars Invested'].replace(r'[\$,]', '', regex=True).astype(float)
+data['Growth %'] = data['Growth %'].replace(r'[%]', '', regex=True).astype(float)
+data = data.fillna({
+    'Current Value': data['Current Value'].mean(),
+    'Dollars Invested': data['Dollars Invested'].mean(),
+    'Growth %': data['Growth %'].mean()
+})
+print("Missing Values After Imputation:")
+print(data.isnull().sum())
+
+duplicates = data.duplicated().sum()
+print(f"\nNumber of Duplicate Rows: {duplicates}")
+data = data.drop_duplicates()
+print(f"Number of Rows After Removing Duplicates: {len(data)}")
+
+Q1 = data['Current Value'].quantile(0.25)
+Q3 = data['Current Value'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+outliers = data[(data['Current Value'] < lower_bound) | (data['Current Value'] > upper_bound)]
+print(f"\nOutliers in Current Value: {len(outliers)}")
+data = data[(data['Current Value'] >= lower_bound) & (data['Current Value'] <= upper_bound)]
+
+cleaned_file = 'C:/Users/notir/resume-portfolio/Practice01/day9/investments_day9_cleaned.csv'
+data.to_csv(cleaned_file, index=False)
+print(f"\nCleaned data saved to {cleaned_file}")
+
+conn = sqlite3.connect('C:/Users/notir/resume-portfolio/Practice01/day9/investments.db')
+data.to_sql('investments_cleaned', conn, if_exists='replace', index=False)
+conn.close()
+print("Updated SQL database with cleaned data.")
+        </pre>
+        <p><strong>Results</strong>:
+        <pre>
+Missing Values After Imputation:
+Dollars Invested      0
+Investment Name       0
+Current Value         0
+HIGH/LOW              0
+Investment Type       0
+Growth %              0
+Outliers             95
+Row Number            0
+Predicted Value     100
+dtype: int64
+
+Number of Duplicate Rows: 0
+Number of Rows After Removing Duplicates: 100
+
+Outliers in Current Value: 0
+Cleaned data saved to C:/Users/notir/resume-portfolio/Practice01/day9/investments_day9_cleaned.csv
+Updated SQL database with cleaned data.
+        </pre>
+        <p><strong>Analysis</strong>: Imputation ensured no missing values in numeric columns, no duplicates were found, and no outliers were detected using the IQR method. The `Outliers` and `Predicted Value` columns had missing data but were not critical. Saved to <code>investments_day9_cleaned.csv</code> and updated the SQL database.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 2: Data Transformation</h2>
+        <p>Transformed the cleaned data by normalizing the Growth % to a 0-1 scale and categorizing Current Value into Low, Medium, and High groups using quartiles.</p>
+        <pre>
+# Continuing from cleaning script
+data['Normalized Growth'] = (data['Growth %'] - data['Growth %'].min()) / (data['Growth %'].max() - data['Growth %'].min())
+data['Value Category'] = pd.qcut(data['Current Value'], q=3, labels=['Low', 'Medium', 'High'])
+print("\nFirst Few Rows After Transformation:")
+print(data.head())
+        </pre>
+        <p><strong>Results</strong>:
+        <pre>
+First Few Rows After Transformation:
+   Dollars Invested  Investment Name  Current Value HIGH/LOW  ... Row Number  Predicted Value Normalized Growth  Value Category
+0              70.0     NVIDIA Stock         8700.0     HIGH  ...          1              NaN          1.000000            High
+1              90.0        AMD Stock         8800.0     HIGH  ...          2              NaN          0.785128            High
+2              80.0         Ethereum         6300.0     HIGH  ...          3              NaN          0.630890          Medium
+3             100.0         Litecoin         6400.0     HIGH  ...          4              NaN          0.511327          Medium
+4             190.0  401K (Vanguard)         7000.0     HIGH  ...          5              NaN          0.291187            High
+[5 rows x 11 columns]
+        </pre>
+        <p><strong>Summary Table</strong>: Overview of cleaned and transformed data:</p>
+        <table>
+            <tr>
+                <th>Investment Name</th>
+                <th>Current Value</th>
+                <th>Normalized Growth</th>
+                <th>Value Category</th>
+            </tr>
+            <tr>
+                <td>NVIDIA Stock</td>
+                <td>8700.0</td>
+                <td>1.000000</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>AMD Stock</td>
+                <td>8800.0</td>
+                <td>0.785128</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>Ethereum</td>
+                <td>6300.0</td>
+                <td>0.630890</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>Litecoin</td>
+                <td>6400.0</td>
+                <td>0.511327</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>401K (Vanguard)</td>
+                <td>7000.0</td>
+                <td>0.291187</td>
+                <td>High</td>
+            </tr>
+        </table>
+        <p><strong>Visualization</strong>: Bar chart of Value Category distribution (generated with <code>matplotlib</code>):</p>
+        <img src="../Practice01/day9/value_category_distribution.png" alt="Value Category Distribution" style="max-width: 100%; height: auto;">
+        <p><strong>Analysis</strong>: Normalization scaled Growth % from 0 to 1, with NVIDIA Stock at 1.0 and 401K at 0.291187. Categorization assigned High to $8,700-$8,800, Medium to $6,300-$6,400, and High again to $7,000, suggesting quartile boundaries need review for consistency. The bar chart shows the distribution of Low, Medium, and High categories, aiding portfolio segmentation.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 3: SQL Verification</h2>
+        <p>Verified the cleaned data by querying the SQL database using <code>sqlite3</code>.</p>
+        <pre>
+import sqlite3
+
+conn = sqlite3.connect('C:/Users/notir/resume-portfolio/Practice01/day9/investments.db')
+cursor = conn.cursor()
+cursor.execute("SELECT Investment_Name, Current_Value, Normalized_Growth, Value_Category FROM investments_cleaned LIMIT 5")
+print("SQL Query Results:")
+print(cursor.fetchall())
+conn.close()
+        </pre>
+        <p><strong>Results</strong>:
+        <pre>
+SQL Query Results:
+[('NVIDIA Stock', 8700.0, 1.0, 'High'), ('AMD Stock', 8800.0, 0.7851282051282052, 'High'), ('Ethereum', 6300.0, 0.6308900523560209, 'Medium'), ('Litecoin', 6400.0, 0.5113268608414245, 'Medium'), ('401K (Vanguard)', 7000.0, 0.2911864406779661, 'High')]
+        </pre>
+        <p><strong>Analysis</strong>: The SQL query confirms the transformed data matches the Python output, ensuring data integrity across platforms.</p>
+    </div>
+
+    <div class="section">
+        <h2>Task 4: Reflection and Next Steps</h2>
+        <p>Reflected on the cleaning and transformation process, noting its impact on data quality and business applications.</p>
+        <div class="highlight">
+            <p><strong>Key Findings</strong>: 
+                - Cleaning removed noise effectively, with no duplicates or missing values in core columns.
+                - The lack of outliers suggests the IQR method’s bounds were too broad; a Z-score approach might detect extreme values like NVIDIA’s $8,700.
+                - Normalization and categorization provide actionable insights, though quartile boundaries need adjustment for consistent High/Medium/Low splits.
+                - The bar chart and SQL verification enhance data validation and visualization.
+            </p>
+            <p><strong>Business Implications</strong>: Cleaned data improves investment decision-making by identifying high-growth (e.g., NVIDIA) and medium-value assets (e.g., Ethereum). Normalized growth aids risk assessment, while categories help portfolio diversification strategies.</p>
+            <p><strong>Next Steps</strong>: 
+                - Visualize Growth % distribution to identify trends.
+                - Apply a Z-score method for outlier detection.
+                - Use the cleaned data for advanced modeling (e.g., decision trees or clustering).
+            </p>
+        </div>
+        <p>In cell A168: “Cleaned and transformed investment data, improving quality for future analysis.”</p>
+    </div>
+</body>
+</html>

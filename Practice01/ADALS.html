@@ -1,0 +1,414 @@
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Data Analyst Learning Summary</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        .section {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .collapsible {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 3px;
+            margin-bottom: 5px;
+        }
+        .collapsible:hover {
+            background-color: #2980b9;
+        }
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+        }
+        .content pre {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 3px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c0392b;
+            margin: 10px 0;
+        }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .content th, .content td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .content th {
+            background-color: #3498db;
+            color: white;
+        }
+        .highlight {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var coll = document.getElementsByClassName("collapsible");
+            for (var i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Learning Summary</h1>
+
+        <div class="section">
+            <h2>Overview</h2>
+            <p>This document provides a detailed summary of the key formulas, step-by-step processes, and techniques learned over 10 days to master data analysis skills, starting with Google Sheets and culminating in a Capstone Project using Python, SQL, and visualization tools. Each section includes collapsible details for in-depth exploration.</p>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="section">
+            <h2>Day 1: Basics of Google Sheets</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Learn the fundamentals of Google Sheets to create and summarize a 50-row investment dataset.</p>
+                
+                <h3>Key Formulas</h3>
+                <ul>
+                    <li><strong>SUM</strong>: `=SUM(A1:A50)` - Totals a range of values (e.g., Dollars Invested).</li>
+                    <li><strong>AVERAGE</strong>: `=AVERAGE(B1:B50)` - Calculates the mean (e.g., Current Value).</li>
+                    <li><strong>COUNT</strong>: `=COUNT(C1:C50)` - Counts non-empty cells (e.g., Investment Names).</li>
+                </ul>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Create a new Google Sheet and input a 50-row dataset with columns: Investment Name, Dollars Invested, Current Value.</li>
+                    <li>Use `SORT` (e.g., `=SORT(A1:C50, 2, TRUE)`) to order by Dollars Invested.</li>
+                    <li>Apply `FILTER` (e.g., `=FILTER(A1:C50, C1:C50>5000)`) to show high-value investments.</li>
+                    <li>Calculate summary statistics using SUM, AVERAGE, and COUNT in a separate summary row.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Mastered basic data entry, sorting, filtering, and summary calculations, laying the foundation for data analysis.</p>
+            </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="section">
+            <h2>Day 2: Intermediate Google Sheets Skills</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Expand to 100 rows, clean data, and use intermediate functions.</p>
+                
+                <h3>Key Formulas</h3>
+                <ul>
+                    <li><strong>IF</strong>: `=IF(A1>100, "High", "Low")` - Categorizes investments.</li>
+                    <li><strong>VLOOKUP</strong>: `=VLOOKUP("NVIDIA", A1:C100, 3, FALSE)` - Looks up Current Value.</li>
+                    <li><strong>SUMIF</strong>: `=SUMIF(A1:A100, ">5000", B1:B100)` - Sums based on a condition.</li>
+                    <li><strong>AVERAGEIF</strong>: `=AVERAGEIF(C1:C100, ">7000", C1:C100)` - Averages high values.</li>
+                </ul>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Expand the dataset to 100 rows and remove duplicates with `Data > Remove Duplicates`.</li>
+                    <li>Use IF to categorize investments by Dollars Invested.</li>
+                    <li>Apply VLOOKUP to find specific investment details.</li>
+                    <li>Use SUMIF and AVERAGEIF for conditional summaries.</li>
+                    <li>Add conditional formatting (e.g., `Format > Conditional Formatting` for values > $5,000).</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Improved data cleaning and conditional analysis skills, enhancing portfolio insights.</p>
+            </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="section">
+            <h2>Day 3: Advanced Google Sheets Skills</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Visualize data and perform advanced analysis.</p>
+                
+                <h3>Key Formulas</h3>
+                <ul>
+                    <li><strong>Growth %</strong>: `=((C1-B1)/B1)*100` - Calculates percentage growth.</li>
+                    <li><strong>QUARTILE</strong>: `=QUARTILE(C1:C100, 1)` - Identifies outliers (Q1).</li>
+                </ul>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Create a pie chart: `Insert > Chart > Pie Chart` for High vs. Low values.</li>
+                    <li>Build a pivot table: `Insert > Pivot Table` to summarize by Investment Type.</li>
+                    <li>Calculate Growth % for each row.</li>
+                    <li>Use QUARTILE to detect outliers and analyze their impact.</li>
+                    <li>Write an analysis noting volatility and diversification needs.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Gained skills in visualization and outlier detection, critical for data-driven decisions.</p>
+            </div>
+        </div>
+
+        <!-- Day 4 -->
+        <div class="section">
+            <h2>Day 4: Integrating Google Sheets with Google Data Studio</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Connect to Google Data Studio for interactive dashboards.</p>
+                
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Share the Google Sheet and connect it to Data Studio.</li>
+                    <li>Create a pie chart (e.g., Investment Type distribution).</li>
+                    <li>Add a bar chart (e.g., Current Value by Investment).</li>
+                    <li>Insert a table with filters for interactive analysis.</li>
+                    <li>Analyze tech-heavy portfolio risks.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Mastered dashboard creation, enhancing data presentation and interactivity.</p>
+            </div>
+        </div>
+
+        <!-- Day 5 -->
+        <div class="section">
+            <h2>Day 5: Introduction to Google Apps Script for Automation</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Automate tasks using Google Apps Script.</p>
+                
+                <h3>Key Code</h3>
+                <pre>
+function calculateMetrics() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  var sum = 0;
+  for (var i = 1; i < data.length; i++) {
+    sum += data[i][1]; // Sum Dollars Invested
+  }
+  sheet.getRange("D1").setValue("Total Invested: $" + sum);
+}
+                </pre>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Open Script Editor: `Extensions > Apps Script`.</li>
+                    <li>Write a function to calculate totals and highlight high-growth investments.</li>
+                    <li>Add email functionality: `MailApp.sendEmail("email@example.com", "Portfolio Summary", "Total: $" + sum)`.</li>
+                    <li>Run and authorize the script.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Learned automation to save time and improve workflow efficiency.</p>
+            </div>
+        </div>
+
+        <!-- Day 6 -->
+        <div class="section">
+            <h2>Day 6: Mastering Advanced Data Analysis Techniques</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Combine predictive analysis and Python visualization.</p>
+                
+                <h3>Key Formulas/Code</h3>
+                <ul>
+                    <li><strong>FORECAST</strong>: `=FORECAST.LINEAR(E1, C1:C100, B1:B100)` - Predicts future values.</li>
+                    <li><strong>Python</strong>:
+                        <pre>
+import pandas as pd
+import matplotlib.pyplot as plt
+data = pd.read_csv('investments.csv')
+data.groupby('Investment Type')['Current Value'].sum().plot(kind='bar')
+plt.savefig('stocks_bar.png')
+                        </pre>
+                    </li>
+                </ul>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Use FORECAST in Google Sheets for predictions.</li>
+                    <li>Load data into Python and create a bar chart.</li>
+                    <li>Enhance Apps Script with a custom menu and PDF export.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Integrated predictive tools and automation for advanced analysis.</p>
+            </div>
+        </div>
+
+        <!-- Day 7 -->
+        <div class="section">
+            <h2>Day 7: Mastering Diverse Data Analysis Techniques</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Explore Tableau and linear regression.</p>
+                
+                <h3>Key Code</h3>
+                <pre>
+from sklearn.linear_model import LinearRegression
+X = data[['Dollars Invested']]
+y = data['Current Value']
+model = LinearRegression().fit(X, y)
+print(model.predict([[1000]]))  # Predicts $3142.13
+                </pre>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Create visualizations in Tableau (e.g., bar chart of Current Value).</li>
+                    <li>Build a linear regression model in Python.</li>
+                    <li>Query SQL: `SELECT * FROM investments WHERE "Current Value" > 5000`.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Mastered diverse tools for visualization and predictive modeling.</p>
+            </div>
+        </div>
+
+        <!-- Day 8 -->
+        <div class="section">
+            <h2>Day 8: Advanced Machine Learning with Python</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Improve predictions with polynomial regression.</p>
+                
+                <h3>Key Code</h3>
+                <pre>
+from sklearn.preprocessing import PolynomialFeatures
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(X)
+poly_model = LinearRegression().fit(X_poly, y)
+print(poly_model.predict(poly.transform([[1000]])))  # Predicts $1838.65
+                </pre>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Transform data with PolynomialFeatures.</li>
+                    <li>Fit and evaluate the polynomial model (MSE: 438,929.92).</li>
+                    <li>Refine visualizations to confirm trends.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Advanced machine learning improved prediction accuracy.</p>
+            </div>
+        </div>
+
+        <!-- Day 9 -->
+        <div class="section">
+            <h2>Day 9: Data Cleaning and Transformation</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Clean and transform the dataset for analysis.</p>
+                
+                <h3>Key Code</h3>
+                <pre>
+data['Current Value'] = data['Current Value'].replace(r'[\$,]', '', regex=True).astype(float)
+data = data.fillna(data.mean())
+data['Normalized Growth'] = (data['Growth %'] - data['Growth %'].min()) / (data['Growth %'].max() - data['Growth %'].min())
+                </pre>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Remove currency symbols and convert to float.</li>
+                    <li>Impute missing values with mean.</li>
+                    <li>Normalize Growth % and categorize Value Category using `pd.qcut`.</li>
+                    <li>Save to CSV and SQL database.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Mastered data preprocessing techniques for robust analysis.</p>
+            </div>
+        </div>
+
+        <!-- Day 10 -->
+        <div class="section">
+            <h2>Day 10: Capstone Project</h2>
+            <button class="collapsible">View Details</button>
+            <div class="content">
+                <h3>Objective</h3>
+                <p>Integrate all skills into a comprehensive portfolio analysis.</p>
+                
+                <h3>Key Code</h3>
+                <pre>
+linear_model = LinearRegression().fit(X, y)
+poly_model = LinearRegression().fit(X_poly, y)
+new_predictions = poly_model.predict(new_X_poly)
+conn = sqlite3.connect('investments.db')
+sql_data = pd.read_sql_query("SELECT 'Investment Name', AVG('Current Value') FROM investments_cleaned GROUP BY 'Investment Name'", conn)
+                </pre>
+
+                <h3>Step-by-Step Process</h3>
+                <ol>
+                    <li>Load and verify cleaned data.</li>
+                    <li>Apply linear and polynomial regression for predictions.</li>
+                    <li>Create visualizations (bar charts for value distribution).</li>
+                    <li>Query SQL for average values and growth.</li>
+                    <li>Combine results into a CSV report.</li>
+                </ol>
+
+                <h3>Key Takeaway</h3>
+                <p>Synthesized all skills into a professional-grade analysis, ready for real-world application.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
