@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hussain’s Plumbing – 24/7 Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,7 +27,7 @@
             text-align: center;
             padding: 50px 20px;
             margin-top: 40px;
-            background: #F8F9FA; /* Light background for contrast */
+            background: #F8F9FA; /* Light background */
         }
         h1 {
             color: #007BFF;
@@ -55,11 +56,28 @@
         }
         .service-item {
             background: #E9ECEF; /* Gray */
-            padding: 15px;
-            margin: 10px auto;
+            padding: 20px;
+            margin: 15px auto;
             width: 90%;
             border-radius: 5px;
             text-align: left;
+            position: relative;
+        }
+        .service-item::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 10px;
+        }
+        .service-item:nth-child(1)::before { content: "\f0ad"; } /* Wrench for Emergency Repairs */
+        .service-item:nth-child(2)::before { content: "\f1b6"; } /* Pipeline for New House Pipelines */
+        .service-item:nth-child(3)::before { content: "\f2f7"; } /* Drain for Drain Cleaning */
+        .service-item:nth-child(4)::before { content: "\f0ad"; } /* Wrench for Pipe Repair */
+        .service-item:nth-child(5)::before { content: "\f2cb"; } /* Heater for Water Heater */
+        .service-item:nth-child(6)::before { content: "\f015"; } /* Home for Fixture Installation */
+        .blog-teaser, .gallery-teaser {
+            padding: 20px;
+            text-align: center;
+            background: #F8F9FA;
         }
         .bottom-nav {
             position: fixed;
@@ -77,6 +95,13 @@
             font-size: 1em;
             text-align: center;
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .bottom-nav a i {
+            font-size: 1.2em;
+            margin-bottom: 2px;
         }
         .bottom-nav a:hover {
             background: #495057;
@@ -89,7 +114,14 @@
         }
         @media (min-width: 768px) {
             .service-item {
-                width: 50%;
+                width: 45%;
+                display: inline-block;
+                vertical-align: top;
+            }
+            .cta-button {
+                display: inline-block;
+                width: 40%;
+                margin: 10px;
             }
         }
     </style>
@@ -111,14 +143,22 @@
         <div class="service-item">Water Heater Installation/Repair</div>
         <div class="service-item">Fixture Installation</div>
     </section>
+    <section class="blog-teaser">
+        <h2>Plumbing Tips</h2>
+        <p><a href="#blog">Learn how to spot a leak!</a></p>
+    </section>
+    <section class="gallery-teaser">
+        <h2>Our Work</h2>
+        <p>Check back soon for photos of our projects!</p>
+    </section>
     <footer>
-        <p>Serving Karimnagar Since 2005</p>
+        <p>Serving Karimnagar Since 2005<br>20 Years of Trust</p>
     </footer>
     <nav class="bottom-nav">
-        <a href="#home">Home</a>
-        <a href="tel:9963739315">Call</a>
-        <a href="#services">Services</a>
-        <a href="#contact">Contact</a>
+        <a href="#home"><i class="fas fa-home"></i> Home</a>
+        <a href="tel:9963739315"><i class="fas fa-phone"></i> Call</a>
+        <a href="#services"><i class="fas fa-wrench"></i> Services</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
 </body>
 </html>
