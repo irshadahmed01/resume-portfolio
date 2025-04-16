@@ -5,134 +5,580 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hussain’s Plumbing – 24/7 Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: #007BFF; /* Blue */
+            --accent-color: #FF6200; /* Orange */
+            --purple-accent: #9b59b6; /* Donghua purple */
+            --bg-color: #F8F9FA; /* Light background */
+            --card-bg: #E9ECEF; /* Gray */
+            --text-color: #333;
+            --dark-bg: #1a202c;
+            --dark-card-bg: #2d3748;
+            --dark-text: #e2e8f0;
+            --cyber-bg: #0d1b2a;
+            --cyber-card-bg: #1b263b;
+            --cyber-text: #a5d8ff;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            --gradient: linear-gradient(135deg, #007BFF, #FF6200, #9b59b6);
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            color: #333;
-            padding-bottom: 60px; /* Space for fixed nav */
         }
+
+        body {
+            font-family: 'Noto Sans JP', 'Noto Sans SC', sans-serif;
+            color: var(--text-color);
+            padding-bottom: 80px; /* Space for nav */
+            background: var(--bg-color) url('https://www.transparenttextures.com/patterns/rice-paper.png') repeat;
+            background-size: 200px;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+            cursor: none;
+            position: relative;
+        }
+
+        body.cyberpunk {
+            background: var(--cyber-bg) url('https://www.transparenttextures.com/patterns/carbon-fibre.png') repeat;
+            color: var(--cyber-text);
+        }
+
+        body.cyberpunk .card-bg {
+            background: var(--cyber-card-bg);
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.9), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            transform: translate(-50%, -50%);
+            transition: transform 0.03s ease, background 0.2s ease;
+        }
+
+        .custom-cursor::after {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border: 2px solid rgba(255, 98, 0, 0.7);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: holoPulse 1.5s ease-in-out infinite;
+        }
+
+        .custom-cursor.active {
+            background: radial-gradient(circle, rgba(255, 98, 0, 0.9), transparent);
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        @keyframes holoPulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        }
+
         .top-bar {
-            background: #007BFF; /* Blue */
+            background: var(--gradient);
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 10;
+            animation: dataFlicker 5s ease-in-out infinite;
+            filter: url(#holo-glow);
         }
+
+        @keyframes dataFlicker {
+            0% { filter: brightness(1) hue-rotate(0deg); }
+            50% { filter: brightness(1.2) hue-rotate(10deg); }
+            100% { filter: brightness(1) hue-rotate(0deg); }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 11;
+            filter: url(#holo-glow);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(360deg) scale(1.2);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+        }
+
         header {
             text-align: center;
-            padding: 50px 20px;
-            margin-top: 40px;
-            background: #F8F9FA; /* Light background */
+            padding: 60px 25px;
+            margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-color);
+            box-shadow: var(--shadow);
+            border-radius: 20px;
         }
+
+        body.cyberpunk header {
+            background: var(--cyber-card-bg);
+        }
+
+        #three-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
         h1 {
-            color: #007BFF;
-            font-size: 1.8em;
+            color: var(--primary-color);
+            font-size: 2.2em;
             margin: 0;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(45deg, #ffffff, #4dabf7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            animation: neuralStream 1.8s ease-out 0.5s forwards;
+            filter: url(#holo-glow);
         }
+
+        @keyframes neuralStream {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         .subheading {
-            font-size: 1.1em;
-            margin: 10px 0;
+            font-size: 1.3em;
+            margin: 15px 0;
+            color: var(--text-color);
+            opacity: 0;
+            animation: dataNode 1s ease-out 0.8s forwards;
+            filter: url(#holo-glow);
         }
+
+        body.cyberpunk .subheading {
+            color: var(--cyber-text);
+        }
+
+        @keyframes dataNode {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .cta-button {
-            background: #FF6200; /* Orange */
+            background: var(--accent-color);
             color: white;
-            padding: 15px;
+            padding: 18px;
             border: none;
-            font-size: 1.4em;
+            font-size: 1.5em;
             display: block;
-            width: 80%;
-            margin: 10px auto;
+            width: 85%;
+            margin: 15px auto;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 25px rgba(255, 98, 0, 0.4);
+            opacity: 0;
+            animation: dataNode 1s ease-out 1s forwards;
+            filter: url(#holo-glow);
         }
+
+        .cta-button:nth-child(3) {
+            background: var(--primary-color);
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
+            animation-delay: 1.2s;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--purple-accent);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(155, 89, 182, 0.5);
+        }
+
+        .cta-button:hover::after {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+
         .services {
-            padding: 20px;
+            padding: 25px;
             text-align: center;
         }
+
+        .services h2 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            filter: url(#holo-glow);
+        }
+
+        body.cyberpunk .services h2 {
+            color: var(--cyber-text);
+        }
+
+        .services h2::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--purple-accent);
+            transition: width 0.6s ease;
+        }
+
+        .services:hover h2::before {
+            width: 100%;
+        }
+
         .service-item {
-            background: #E9ECEF; /* Gray */
-            padding: 20px;
-            margin: 15px auto;
+            background: var(--card-bg);
+            padding: 25px;
+            margin: 20px auto;
             width: 90%;
-            border-radius: 5px;
+            border-radius: 15px;
             text-align: left;
             position: relative;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: perspective(1200px) rotateX(-15deg) translateY(50px);
+            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            will-change: transform, opacity;
         }
+
+        body.cyberpunk .service-item {
+            background: var(--cyber-card-bg);
+        }
+
+        .service-item.visible {
+            opacity: 1;
+            transform: perspective(1200px) rotateX(0) translateY(0);
+        }
+
+        .service-item:hover {
+            transform: perspective(1200px) rotateX(5deg) translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+
         .service-item::before {
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
-            margin-right: 10px;
+            margin-right: 12px;
+            color: var(--primary-color);
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+            filter: url(#holo-glow);
         }
-        .service-item:nth-child(1)::before { content: "\f0ad"; } /* Wrench for Emergency Repairs */
-        .service-item:nth-child(2)::before { content: "\f1b6"; } /* Pipeline for New House Pipelines */
-        .service-item:nth-child(3)::before { content: "\f2f7"; } /* Drain for Drain Cleaning */
-        .service-item:nth-child(4)::before { content: "\f0ad"; } /* Wrench for Pipe Repair */
-        .service-item:nth-child(5)::before { content: "\f2cb"; } /* Heater for Water Heater */
-        .service-item:nth-child(6)::before { content: "\f015"; } /* Home for Fixture Installation */
+
+        body.cyberpunk .service-item::before {
+            color: var(--cyber-text);
+        }
+
+        .service-item:hover::before {
+            transform: scale(1.3) rotate(20deg);
+        }
+
+        .service-item:nth-child(1)::before { content: "\f0ad"; } /* Wrench */
+        .service-item:nth-child(2)::before { content: "\f1b6"; } /* Pipeline */
+        .service-item:nth-child(3)::before { content: "\f2f7"; } /* Drain */
+        .service-item:nth-child(4)::before { content: "\f0ad"; } /* Wrench */
+        .service-item:nth-child(5)::before { content: "\f2cb"; } /* Heater */
+        .service-item:nth-child(6)::before { content: "\f015"; } /* Home */
+
         .blog-teaser, .gallery-teaser {
-            padding: 20px;
+            padding: 25px;
             text-align: center;
-            background: #F8F9FA;
+            background: var(--bg-color);
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
+
+        body.cyberpunk .blog-teaser, body.cyberpunk .gallery-teaser {
+            background: var(--cyber-card-bg);
+        }
+
+        .blog-teaser.visible, .gallery-teaser.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .blog-teaser::before, .gallery-teaser::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0 50 Q25 25 50 50 T100 50' stroke='%23007BFF' stroke-width='5' fill='none' opacity='0.2'/%3E%3C/svg%3E");
+            opacity: 0;
+            transform: scale(1.5);
+            transition: all 1.2s ease;
+        }
+
+        .blog-teaser.visible::before, .gallery-teaser.visible::before {
+            opacity: 0.15;
+            transform: scale(1);
+        }
+
+        .blog-teaser h2, .gallery-teaser h2 {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            filter: url(#holo-glow);
+        }
+
+        body.cyberpunk .blog-teaser h2, body.cyberpunk .gallery-teaser h2 {
+            color: var(--cyber-text);
+        }
+
+        .blog-teaser p, .gallery-teaser p {
+            font-size: 1.2em;
+            color: var(--text-color);
+            filter: url(#holo-glow);
+        }
+
+        body.cyberpunk .blog-teaser p, body.cyberpunk .gallery-teaser p {
+            color: var(--cyber-text);
+        }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
             width: 100%;
-            background: #343A40; /* Dark gray */
+            background: var(--gradient);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 15px 0;
             z-index: 10;
+            box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.2);
+            perspective: 1200px;
         }
+
         .bottom-nav a {
             color: white;
             text-decoration: none;
-            font-size: 1em;
+            font-size: 1.1em;
             text-align: center;
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            filter: url(#holo-glow);
         }
-        .bottom-nav a i {
-            font-size: 1.2em;
-            margin-bottom: 2px;
+
+        .bottom-nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+
         .bottom-nav a:hover {
-            background: #495057;
+            background: rgba(155, 89, 182, 0.3);
+            transform: translateZ(20px);
         }
+
+        .bottom-nav a:hover::before {
+            opacity: 1;
+        }
+
+        .bottom-nav a i {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .bottom-nav a:hover i {
+            transform: rotateY(360deg);
+        }
+
         footer {
             text-align: center;
-            padding: 20px;
-            background: #F8F9FA;
-            margin-top: 20px;
+            padding: 25px;
+            background: var(--bg-color);
+            margin-top: 25px;
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+            position: relative;
+            opacity: 0;
+            animation: dataNode 1s ease-out 1.5s forwards;
+            filter: url(#holo-glow);
         }
+
+        body.cyberpunk footer {
+            background: var(--cyber-card-bg);
+        }
+
+        footer p {
+            font-size: 1.2em;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            filter: url(#holo-glow);
+        }
+
+        body.cyberpunk footer p {
+            color: var(--cyber-text);
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            margin: 0 20px;
+            font-size: 2.5em;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            display: inline-block;
+            filter: url(#holo-glow);
+        }
+
+        body.cyberpunk .social-links a {
+            color: var(--cyber-text);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateZ(20px) rotateY(720deg);
+        }
+
+        .social-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 98, 0, 0.3), transparent);
+            opacity: 0;
+            transition: all 0.3s ease;
+            top: 0;
+            left: 0;
+        }
+
+        .social-links a:hover::after {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+
+        svg#filters {
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
         @media (min-width: 768px) {
             .service-item {
                 width: 45%;
                 display: inline-block;
                 vertical-align: top;
+                margin: 10px;
             }
             .cta-button {
                 display: inline-block;
                 width: 40%;
-                margin: 10px;
+                margin: 15px;
+            }
+            .services {
+                padding: 40px;
+            }
+            header {
+                padding: 80px 40px;
+            }
+            .blog-teaser, .gallery-teaser {
+                padding: 40px;
+            }
+            footer {
+                padding: 40px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            header, .service-item, .cta-button, .bottom-nav a, .social-links a, .blog-teaser, .gallery-teaser, footer {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+            .service-item.visible, .blog-teaser.visible, .gallery-teaser.visible {
+                opacity: 1;
+                transform: translate(0);
+            }
+            .custom-cursor::after, .social-links a::after, .cta-button::after, .bottom-nav a::before {
+                display: none;
             }
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 </head>
 <body>
+    <div class="custom-cursor"></div>
+    <svg id="filters">
+        <filter id="holo-glow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+            <feOffset in="blur" dx="0" dy="0" result="offsetBlur"/>
+            <feFlood flood-color="#007BFF" flood-opacity="0.5" result="color"/>
+            <feComposite in="color" in2="offsetBlur" operator="in" result="glow"/>
+            <feMerge>
+                <feMergeNode in="glow"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </svg>
+    <button class="theme-toggle" aria-label="Toggle theme">⚡️</button>
     <div class="top-bar">24/7 Emergency: 9963739315</div>
     <header>
+        <canvas id="three-canvas"></canvas>
         <h1>Hussain’s Plumbing</h1>
         <p class="subheading">Your 24/7 Solution in Karimnagar</p>
         <a href="tel:9963739315" class="cta-button">Call Now</a>
-        <a href="#contact" class="cta-button" style="background: #007BFF;">Get a Free Quote</a>
+        <a href="#contact" class="cta-button">Get a Free Quote</a>
     </header>
     <section class="services">
         <h2>Our Services</h2>
@@ -153,6 +599,10 @@
     </section>
     <footer>
         <p>Serving Karimnagar Since 2005<br>20 Years of Trust</p>
+        <div class="social-links">
+            <a href="https://wa.me/9963739315" aria-label="Chat with us on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://instagram.com/hussainsplumbing" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
     </footer>
     <nav class="bottom-nav">
         <a href="#home"><i class="fas fa-home"></i> Home</a>
@@ -160,5 +610,112 @@
         <a href="#services"><i class="fas fa-wrench"></i> Services</a>
         <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+
+    <script>
+        // WebGL Holographic Grid for Header
+        const headerCanvas = document.getElementById('three-canvas');
+        const headerScene = new THREE.Scene();
+        const headerCamera = new THREE.PerspectiveCamera(75, headerCanvas.clientWidth / headerCanvas.clientHeight, 0.1, 1000);
+        const headerRenderer = new THREE.WebGLRenderer({ canvas: headerCanvas, alpha: true });
+        headerRenderer.setSize(headerCanvas.clientWidth, headerCanvas.clientHeight);
+
+        const grid = new THREE.Group();
+        const gridSize = 6;
+        for (let i = 0; i < gridSize; i++) {
+            for (let j = 0; j < gridSize; j++) {
+                const geometry = new THREE.IcosahedronGeometry(0.08, 0);
+                const material = new THREE.MeshBasicMaterial({ color: 0x007BFF, opacity: 0.7, transparent: true });
+                const node = new THREE.Mesh(geometry, material);
+                node.position.set((i - gridSize / 2) * 0.6, (j - gridSize / 2) * 0.6, Math.random() * -1.5);
+                grid.add(node);
+                // Particle trail
+                const trail = new THREE.Mesh(new THREE.SphereGeometry(0.04, 4, 4), new THREE.MeshBasicMaterial({ color: 0xFF6200, opacity: 0.4 }));
+                trail.position.copy(node.position);
+                trail.position.z -= 0.15;
+                grid.add(trail);
+            }
+        }
+        headerScene.add(grid);
+        headerCamera.position.z = 4;
+
+        function animateHeader() {
+            requestAnimationFrame(animateHeader);
+            grid.rotation.y += 0.004;
+            grid.rotation.x += 0.002;
+            grid.children.forEach((child, i) => {
+                if (i % 2 === 0) child.position.z = Math.sin(Date.now() * 0.001 + i) * 0.15;
+            });
+            headerRenderer.render(headerScene, headerCamera);
+        }
+        animateHeader();
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            headerCamera.aspect = headerCanvas.clientWidth / headerCanvas.clientHeight;
+            headerCamera.updateProjectionMatrix();
+            headerRenderer.setSize(headerCanvas.clientWidth, headerCanvas.clientHeight);
+        });
+
+        // Mouse interaction for header
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            headerCamera.position.x = mouseX * 1.5;
+            headerCamera.position.y = mouseY * 1.5;
+        });
+
+        // Device orientation for service items
+        window.addEventListener('deviceorientation', (e) => {
+            const tiltX = (e.beta || 0) * 0.02;
+            const tiltY = (e.gamma || 0) * 0.02;
+            document.querySelectorAll('.service-item').forEach(item => {
+                item.style.transform = `perspective(1200px) rotateX(${tiltX * 5}deg) rotateY(${tiltY * 5}deg)`;
+            });
+        });
+
+        // Custom cursor
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .service-item').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+            });
+        });
+
+        // Theme toggle
+        const themeButton = document.querySelector('.theme-toggle');
+        let themeIndex = 0;
+        const themes = ['light', 'cyberpunk'];
+        themeButton.addEventListener('click', () => {
+            themeIndex = (themeIndex + 1) % themes.length;
+            document.body.className = themes[themeIndex];
+            themeButton.textContent = themeIndex === 0 ? '⚡️' : '🌙';
+        });
+
+        // Scroll-triggered animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.service-item, .blog-teaser, .gallery-teaser');
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.2 }
+            );
+
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
