@@ -1,0 +1,268 @@
+[
+  {
+    "id": 1,
+    "name": "Tomato Pappu",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Toor Dal",
+      "Tomato",
+      "Onion",
+      "Green Chilli",
+      "Turmeric",
+      "Tamarind"
+    ],
+    "instructions": "Cook toor dal until soft. In a pan, sauté onions, tomatoes, and green chillies. Add turmeric, tamarind, and mashed dal. Simmer and serve with rice."
+  },
+  {
+    "id": 2,
+    "name": "Egg Burji",
+    "cuisine": "North Indian",
+    "ingredients": [
+      "Egg",
+      "Onion",
+      "Tomato",
+      "Green Chilli",
+      "Coriander"
+    ],
+    "instructions": "Chop onions and tomatoes. Sauté onions, then add tomatoes and green chillies. Add beaten eggs and stir until scrambled. Garnish with coriander."
+  },
+  {
+    "id": 3,
+    "name": "Ridge Gourd Curry (Beerakaya Koora)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Ridge Gourd",
+      "Onion",
+      "Green Chilli",
+      "Garlic",
+      "Mustard Seeds",
+      "Turmeric"
+    ],
+    "instructions": "Peel and chop ridge gourd. Temper mustard seeds, add garlic, onions, chillies, and turmeric. Add ridge gourd and cook until soft."
+  },
+  {
+    "id": 4,
+    "name": "Bottle Gourd Kootu (Suraikkai Kootu)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Bottle Gourd",
+      "Moong Dal",
+      "Coconut",
+      "Green Chilli",
+      "Cumin",
+      "Mustard Seeds"
+    ],
+    "instructions": "Cook moong dal and bottle gourd. Grind coconut, chilli, and cumin. Mix everything and temper with mustard seeds."
+  },
+  {
+    "id": 5,
+    "name": "Drumstick Sambar",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Drumstick",
+      "Toor Dal",
+      "Tamarind",
+      "Sambar Powder",
+      "Mustard Seeds",
+      "Curry Leaves"
+    ],
+    "instructions": "Cook dal. Boil drumsticks with tamarind and sambar powder. Combine with dal and temper with mustard seeds and curry leaves."
+  },
+  {
+    "id": 6,
+    "name": "Malabar Spinach Curry (Bachali Koora Pulusu)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Malabar Spinach",
+      "Tamarind",
+      "Green Chilli",
+      "Garlic",
+      "Onion"
+    ],
+    "instructions": "Boil chopped spinach with tamarind, garlic, onion, and green chillies. Simmer and serve with rice."
+  },
+  {
+    "id": 7,
+    "name": "Palakura Pappu (Spinach Dal)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Spinach",
+      "Toor Dal",
+      "Garlic",
+      "Green Chilli",
+      "Onion",
+      "Tomato"
+    ],
+    "instructions": "Pressure cook dal and spinach with onion, tomato, chilli, and garlic. Temper and mix well."
+  },
+  {
+    "id": 8,
+    "name": "Cauliflower Pepper Fry",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Cauliflower",
+      "Black Pepper",
+      "Onion",
+      "Garlic",
+      "Curry Leaves"
+    ],
+    "instructions": "Boil cauliflower. Sauté with garlic, onion, curry leaves, and pepper powder."
+  },
+  {
+    "id": 9,
+    "name": "Cabbage Thoran",
+    "cuisine": "Kerala",
+    "ingredients": [
+      "Cabbage",
+      "Coconut",
+      "Green Chilli",
+      "Cumin",
+      "Mustard Seeds"
+    ],
+    "instructions": "Finely chop cabbage. Mix with grated coconut, chilli, and cumin. Sauté and temper with mustard seeds."
+  },
+  {
+    "id": 10,
+    "name": "Broad Beans Poriyal (Avarakkai Poriyal)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Broad Beans",
+      "Coconut",
+      "Green Chilli",
+      "Mustard Seeds"
+    ],
+    "instructions": "Chop and cook beans. Add grated coconut and temper with mustard seeds."
+  },
+  {
+    "id": 11,
+    "name": "Alchanthakaya Curry (Cow Peas Curry)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Fresh Black-eyed Peas",
+      "Onion",
+      "Garlic",
+      "Tomato",
+      "Mustard Seeds"
+    ],
+    "instructions": "Pressure cook peas. Sauté onion, garlic, tomato, and mix with cooked peas."
+  },
+  {
+    "id": 12,
+    "name": "Ladies Finger Fry (Bendakaya Vepudu)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Ladies Fingers",
+      "Onion",
+      "Curry Leaves",
+      "Mustard Seeds",
+      "Chilli Powder"
+    ],
+    "instructions": "Chop and fry okra with onion, curry leaves, and chilli powder. Avoid water to prevent stickiness."
+  },
+  {
+    "id": 13,
+    "name": "Ivy Gourd Fry (Dondakaya Vepudu)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Ivy Gourd",
+      "Onion",
+      "Mustard Seeds",
+      "Garlic"
+    ],
+    "instructions": "Chop and fry ivy gourd with onion and mustard seeds until crisp."
+  },
+  {
+    "id": 14,
+    "name": "Potato Roast (Urulaikizhangu Roast)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Potato",
+      "Mustard Seeds",
+      "Curry Leaves",
+      "Chilli Powder"
+    ],
+    "instructions": "Boil and cube potatoes. Roast with mustard seeds, curry leaves, and chilli powder."
+  },
+  {
+    "id": 15,
+    "name": "Boiled Egg Curry",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Eggs",
+      "Onion",
+      "Tomato",
+      "Ginger Garlic Paste",
+      "Chilli Powder"
+    ],
+    "instructions": "Boil eggs. Make a masala with onion, tomato, spices. Add eggs and simmer."
+  },
+  {
+    "id": 16,
+    "name": "eggplant Curry (Vankaya Koora)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "eggplant",
+      "Onion",
+      "Tomato",
+      "Garlic",
+      "Mustard Seeds"
+    ],
+    "instructions": "Chop brinjal. Cook with sautéed onion, tomato, and garlic. Temper with mustard seeds."
+  },
+  {
+    "id": 17,
+    "name": "Gutthi Vankaya Curry",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Small eggplant",
+      "Peanuts",
+      "Sesame Seeds",
+      "Coconut",
+      "Onion",
+      "Tamarind"
+    ],
+    "instructions": "Stuff brinjal with spiced peanut-coconut paste. Cook in tamarind gravy."
+  },
+  {
+    "id": 18,
+    "name": "Bagara Baingan",
+    "cuisine": "Hyderabadi",
+    "ingredients": [
+      "eggplant",
+      "Peanuts",
+      "Sesame Seeds",
+      "Coconut",
+      "Tamarind",
+      "Spices"
+    ],
+    "instructions": "Make a thick masala with peanuts, sesame, and coconut. Cook brinjal in this spicy gravy."
+  },
+  {
+    "id": 19,
+    "name": "Chicken Chettinad",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Chicken",
+      "Onion",
+      "Tomato",
+      "Coconut",
+      "Pepper",
+      "Fennel",
+      "Curry Leaves"
+    ],
+    "instructions": "Prepare masala with spices and coconut. Cook chicken until soft in the masala."
+  },
+  {
+    "id": 20,
+    "name": "Andhra Kodi Kura (Andhra Chicken Curry)",
+    "cuisine": "South Indian",
+    "ingredients": [
+      "Chicken",
+      "Onion",
+      "Ginger Garlic Paste",
+      "Coriander Powder",
+      "Chilli Powder"
+    ],
+    "instructions": "Make a spicy masala with onion and spices. Add chicken and simmer till cooked."
+  }
+]
