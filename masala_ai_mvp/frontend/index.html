@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Masala AI – Ingredient Detector</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #e65100;
+    }
+
+    input[type="file"] {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    button:hover {
+      background-color: #f4511e;
+    }
+
+    #preview {
+      max-width: 100%;
+      margin-top: 15px;
+      display: none;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    #results {
+      margin-top: 30px;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .recipe {
+      background: #fff3e0;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .recipe h4 {
+      margin: 0 0 8px;
+      color: #bf360c;
+    }
+
+    .recipe em {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid #ccc;
+      border-top: 3px solid #ff7043;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        margin: 20px;
+        padding: 10px;
+      }
+
+      button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Masala AI 🍅</h1>
+
+  <input type="file" id="imageInput" accept="image/*" capture="environment" />
+  <br/>
+  <button onclick="uploadImage()">Detect Ingredients</button>
+  <button onclick="resetAll()">Clear</button>
+
+  <img id="preview" />
+
+  <div id="results"></div>
+
+  <script>
+    const fileInput = document.getElementById('imageInput');
+    const previewImg = document.getElementById('preview');
+    const resultsDiv = document.getElementById('results');
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        previewImg.style.display = 'none';
+      }
+    });
+
+    async function uploadImage() {
+      if (!fileInput.files.length) {
+        resultsDiv.innerHTML = "❌ Please select or capture an image first.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+      resultsDiv.innerHTML = `<div class="spinner"></div> <span>Detecting ingredients...</span>`;
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/detect_and_suggest", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        const ingredientsList = data.detected_ingredients.map(ing => `<li>${ing}</li>`).join("");
+
+        const recipesFormatted = data.recipes.map(recipe => {
+          const ingList = recipe.ingredients.map(ing => `<li>• ${ing}</li>`).join("");
+          const steps = recipe.instructions
+            .split(/Step\s*\d+[:.-]?\s*/i)
+            .filter(step => step.trim().length > 0)
+            .map((step, i) => `<li>${i + 1}. ${step.trim()}</li>`)
+            .join("");
+
+          return `
+            <div class="recipe">
+              <h4>${recipe.name} <em>(${recipe.cuisine})</em></h4>
+              <strong>Ingredients:</strong>
+              <ul>${ingList}</ul>
+              <strong>Instructions:</strong>
+              <ol>${steps}</ol>
+            </div>
+          `;
+        }).join("");
+
+        resultsDiv.innerHTML = `
+          <h3>✅ Detected Ingredients:</h3>
+          <ul>${ingredientsList}</ul>
+          <h3>🍽️ Suggested Recipes:</h3>
+          ${recipesFormatted || "<p>No matching recipes found.</p>"}
+        `;
+
+      } catch (err) {
+        resultsDiv.innerHTML = "❌ Error: " + err.message;
+      }
+    }
+
+    function resetAll() {
+      fileInput.value = '';
+      previewImg.src = '';
+      previewImg.style.display = 'none';
+      resultsDiv.innerHTML = '';
+    }
+  </script>
+
+</body>
+</html>
